@@ -2,21 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-//FIXME: move this enum to BoardManager
-public enum BoardSpaceEnum {
-    NONE = 0,
-    P1 = 1,
-    P2 = 2,
-    P3 = 3,
-    P4 = 4,
-    P5 = 5,
-    O1 = 6,
-    O2 = 7,
-    O3 = 8,
-    O4 = 9,
-    O5 = 10
-}
+using UnityEngine.Events;
 
 public class HenchmanCard : Card {
 
@@ -36,10 +22,13 @@ public class HenchmanCard : Card {
     private int permanentHealthBuff;
 
     //mechanic-related flags
-    private bool scheming;
-    public bool ellusive;
-    public bool eager;
-    public bool overAchiever;
+    private bool hasActed;
+    [SerializeField]
+    private bool ellusive;
+    [SerializeField]
+    private bool eager;
+    [SerializeField]
+    private bool overAchiever;
 
     //game-state-related members
     private BoardSpaceEnum location;
@@ -55,8 +44,16 @@ public class HenchmanCard : Card {
     private Text healthField;
     [SerializeField]
     private GameObject schemingMarker;
-    //FIXME: delet this
-    public GameObject destroyedMarker;
+
+    //-------
+    // events
+    //-------
+
+    public UnityEvent RushEvent;
+    public UnityEvent VengeanceEvent;
+    public UnityEvent FlashyEvent;
+    public UnityEvent ClosingActEvent;
+    public UnityEvent AttentionSeekerEvent;
 
     //--------------------
     // managing game state
@@ -72,35 +69,31 @@ public class HenchmanCard : Card {
         health = maxHealth;
         tempHealthBuff = 0;
         permanentHealthBuff = 0;
-        scheming = true;
+        hasActed = true;
 
         UpdateAttackField();
         UpdateHealthField();
         //the henchman is scheming (summoning sick) the first turn it comes into play,
         //unless it has the eager keyword
         if(eager) {
-            StopScheming();
+            AllowAction();
         }
 
         turnsInPlay = 0;
     }
 
     //NOTE: This should only happen if it's in play!
-    //FIXME: This should be private post demo!
-    public void HandleEndOfTurn() {
+    private void HandleEndOfTurn() {
         //remove summoning sickness
-        if(scheming) {
-            StopScheming();
+        if(hasActed) {
+            AllowAction();
+        } else {
+            Debug.Log("The turn ended and a henchman hadn't acted...");
         }
 
         RemoveTempBuffsAndDebuffs();
 
         turnsInPlay++;
-    }
-
-    //FIXME: delet this
-    public void ResetScene() {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
     private void UpdateAttackField() {
@@ -111,14 +104,19 @@ public class HenchmanCard : Card {
         healthField.text = GetHealth().ToString();
     }
 
-    private void StopScheming() {
-        scheming = false;
-        schemingMarker.SetActive(false);
+    public void ActionTaken() {
+        hasActed = true;
     }
 
-    public override void DestroyThisCard() {
+    private void AllowAction() {
+        hasActed = false;
+        if(schemingMarker.activeSelf) {
+            schemingMarker.SetActive(false);
+        }
+    }
+
+    public override void RequestDestroy() {
         //request that the BoardManager destroy it
-        destroyedMarker.SetActive(true);
     }
 
     //--------------------------------------------------
@@ -142,7 +140,7 @@ public class HenchmanCard : Card {
             health -= (uint) damage;
 
             if(GetHealth() <= 0) {
-                DestroyThisCard();
+                RequestDestroy();
             } else {
                 //update visuals
                 UpdateHealthField();
@@ -182,7 +180,7 @@ public class HenchmanCard : Card {
             tempHealthBuff -= healthDebuff;
 
             if(GetHealth() <= 0) {
-                DestroyThisCard();
+                RequestDestroy();
             } else {
                 //update visuals
                 UpdateHealthField();
@@ -231,7 +229,7 @@ public class HenchmanCard : Card {
             permanentHealthBuff -= healthDebuff;
 
             if(GetHealth() <= 0) {
-                DestroyThisCard();
+                RequestDestroy();
             } else {
                 //update visuals
                 UpdateHealthField();
@@ -239,9 +237,9 @@ public class HenchmanCard : Card {
         }
     }
 
-    //----------
-    // accessors
-    //----------
+    //-----------------
+    // accessor methods
+    //-----------------
     
     public uint GetAttack() {
         int totalAttack = ((int) attack) + tempAttackBuff + permanentAttackBuff;
@@ -254,5 +252,21 @@ public class HenchmanCard : Card {
 
     public int GetMaxHealth() {
         return ((int) maxHealth) + tempHealthBuff + permanentHealthBuff;
+    }
+
+    public bool IsEllusive() {
+        return ellusive;
+    }
+
+    public bool IsEager() {
+        return eager;
+    }
+
+    public bool IsOverAchiever() {
+        return overAchiever;
+    }
+
+    public bool HasActedThisTurn() {
+        return hasActed;
     }
 }
