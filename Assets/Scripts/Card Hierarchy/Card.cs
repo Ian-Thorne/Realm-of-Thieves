@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum PlayStateEnum {
     DECK = 0,
@@ -26,6 +27,8 @@ public abstract class Card : MonoBehaviour {
     [SerializeField]
     private BoardManager board;
     private PlayStateEnum playState;
+    [SerializeField]
+    private Image cardBack;
 
     //--------------------
     // managing game state
@@ -112,5 +115,13 @@ public abstract class Card : MonoBehaviour {
 
     public void SetPlayState(PlayStateEnum state) {
         playState = state;
+    }
+
+    public void Flip() {
+        cardBack.gameObject.SetActive(!cardBack.gameObject.activeSelf);
+    }
+
+    public bool IsFaceUp() {
+        return !cardBack.gameObject.activeSelf;
     }
 }
