@@ -13,6 +13,13 @@ public enum PlayStateEnum {
 
 public abstract class Card : MonoBehaviour {
 
+    //-------
+    // events
+    //-------
+
+    public delegate void CardInHandSelectedAction(Card card);
+    public static event CardInHandSelectedAction CardInHandSelectedEvent;
+
     //-----------------
     // member variables
     //-----------------
@@ -40,6 +47,49 @@ public abstract class Card : MonoBehaviour {
     }
 
     public abstract void RequestDestroy();
+
+    public void HandleCardClicked() {
+        switch(playState) {
+            case PlayStateEnum.DECK:
+                ClickedWhileInDeck();
+                break;
+            case PlayStateEnum.HAND:
+                ClickedWhileInHand();
+                break;
+            case PlayStateEnum.BOARD:
+                ClickedWhileOnBoard();
+                break;
+            case PlayStateEnum.PRIZE:
+                ClickedWhileAPrize();
+                break;
+            case PlayStateEnum.DONE:
+                Debug.Log(cardName + " clicked while in the done state... That shouldn't be possible...");
+                break;
+            default:
+                Debug.Log(cardName + " clicked without a valid state...");
+                break;
+        }
+    }
+
+    protected virtual void ClickedWhileInDeck() {
+        Debug.Log(cardName + " clicked while in deck (?)");
+    }
+
+    protected virtual void ClickedWhileInHand() {
+        Debug.Log(cardName + " clicked while in hand");
+        if(CardInHandSelectedEvent != null) {
+            CardInHandSelectedEvent(this);
+        }
+    }
+
+    protected virtual void ClickedWhileOnBoard() {
+        Debug.Log(cardName + " clicked while on board");
+    }
+
+    protected virtual void ClickedWhileAPrize() {
+        //FIXME: don't reveal the card's name when it's a prize card
+        Debug.Log(cardName + " clicked while being a prize card");
+    }
 
     //-------------------------
     // player-affecting methods

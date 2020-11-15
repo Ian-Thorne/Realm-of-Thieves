@@ -6,6 +6,13 @@ using UnityEngine.Events;
 
 public class HenchmanCard : Card {
 
+    //-------
+    // events
+    //-------
+
+    public delegate void HenchmanInPlaySelectedAction(HenchmanCard card);
+    public static event HenchmanInPlaySelectedAction HenchmanInPlaySelectedEvent;
+
     //-----------------
     // member variables
     //-----------------
@@ -45,9 +52,9 @@ public class HenchmanCard : Card {
     [SerializeField]
     private GameObject schemingMarker;
 
-    //-------
-    // events
-    //-------
+    //---------------
+    // keyword events
+    //---------------
 
     public UnityEvent RushEvent;
     public UnityEvent VengeanceEvent;
@@ -117,6 +124,13 @@ public class HenchmanCard : Card {
 
     public override void RequestDestroy() {
         //request that the BoardManager destroy it
+    }
+
+    protected override void ClickedWhileOnBoard() {
+        base.ClickedWhileOnBoard();
+        if(HenchmanInPlaySelectedEvent != null) {
+            HenchmanInPlaySelectedEvent(this);
+        }
     }
 
     //--------------------------------------------------

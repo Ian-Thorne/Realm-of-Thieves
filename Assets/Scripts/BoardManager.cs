@@ -22,6 +22,16 @@ public enum BoardSpaceEnum {
 
 public class BoardManager : MonoBehaviour {
 
+    //-------
+    // events
+    //-------
+
+    public delegate void EmptyBoardSpaceSelectedAction(BoardSpaceEnum space);
+    public static event EmptyBoardSpaceSelectedAction EmptyBoardSpaceSelectedEvent;
+
+    public delegate void EndTurnAction();
+    public static event EndTurnAction EndTurnEvent;
+
     //-----------------
     // member variables
     //-----------------
