@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using static BoardSpaceEnum;
 
+[System.Serializable]
 public enum BoardSpaceEnum {
     NONE = 0,
     P1 = 1,

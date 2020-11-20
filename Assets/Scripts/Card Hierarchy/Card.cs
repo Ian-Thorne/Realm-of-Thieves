@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public enum PlayStateEnum {
     DECK = 0,
     HAND = 1,
