@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackingWithHenchmanState : CardGameState {
+public class AttackingWithHenchmanState : RoTState {
 
     public override void Enter() {
         base.Enter();

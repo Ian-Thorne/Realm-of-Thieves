@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnResetState : CardGameState {
+public class TurnResetState : RoTState {
 
     public override void Enter() {
         base.Enter();

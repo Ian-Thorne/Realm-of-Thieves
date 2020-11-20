@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardGameState : State {
+public class RoTState : State {
 
     protected RoTStateMachine rsm;
 
+    void Awake() {
+        rsm = GetComponent<RoTStateMachine>();
+    }
+
     public override void Enter() {
         base.Enter();
-        Debug.Log("Entering a CardGameState:");
+        Debug.Log("Entering a RoTState:");
     }
 
     public override void Exit() {

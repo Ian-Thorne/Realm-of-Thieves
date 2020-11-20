@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using static BoardSpaceEnum;
 
+[System.Serializable]
 public enum BoardSpaceEnum {
     NONE = 0,
     P1 = 1,
@@ -19,6 +20,11 @@ public enum BoardSpaceEnum {
     O5 = 10
 }
 
+[System.Serializable]
+public struct BoardSpaceStruct {
+    public BoardSpaceEnum space;
+    public GameObject holder;
+}
 
 public class BoardManager : MonoBehaviour {
 
@@ -36,9 +42,12 @@ public class BoardManager : MonoBehaviour {
     // member variables
     //-----------------
 
-    public Dictionary<BoardSpaceEnum, HenchmanCard> board;
-    public RemoveQueue<BoardSpaceEnum> henchmenOrder;
-    public List<Card> cardsToDestroy;
+    public List<BoardSpaceStruct> boardSpaceHolders;
+
+    private Dictionary<BoardSpaceEnum, HenchmanCard> board;
+    private Dictionary<BoardSpaceEnum, GameObject> boardSpaces;
+    private RemoveQueue<BoardSpaceEnum> henchmenOrder;
+    private List<Card> cardsToDestroy;
 
     //--------------------
     // managing game state
@@ -57,6 +66,11 @@ public class BoardManager : MonoBehaviour {
         board.Add(O3, null);
         board.Add(O4, null);
         board.Add(O5, null);
+
+        boardSpaces = new Dictionary<BoardSpaceEnum, GameObject>();
+        foreach(BoardSpaceStruct space in boardSpaceHolders) {
+            boardSpaces.Add(space.space, space.holder);
+        }
 
         //initialize the henchmenOrder (empty, like the board)
         henchmenOrder = new RemoveQueue<BoardSpaceEnum>();
@@ -77,6 +91,24 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
+    //----------------------------
+    // interfacing with the player
+    //----------------------------
+
+    public void EmptyBoardSpaceClicked(BoardSpaceEnum space) {
+        Debug.Log("Space " + space + " clicked!");
+        if(EmptyBoardSpaceSelectedEvent != null) {
+            EmptyBoardSpaceSelectedEvent(space);
+        }
+    }
+
+    public void EndTurnButtonClicked() {
+        Debug.Log("End turn button clicked!");
+        if(EndTurnEvent != null) {
+            EndTurnEvent();
+        }
+    }
+
     //------------------------
     // affecting cards in play
     //------------------------
@@ -86,11 +118,17 @@ public class BoardManager : MonoBehaviour {
         return (board[space] == null);
     }
 
+    private void VisiblyPlaceHenchmanAtSpace(BoardSpaceEnum space, HenchmanCard henchman) {
+        GameObject boardSpace = boardSpaces[space];
+        henchman.gameObject.transform.parent = boardSpace.transform;
+    }
+
     //should only be called if CanPutHenchmanAtSpace() returns true
     public void PutHenchmanAtSpace(BoardSpaceEnum space, HenchmanCard henchman) {
         //put it on the board
         board[space] = henchman;
         henchman.SetPlayState(PlayStateEnum.BOARD);
+        VisiblyPlaceHenchmanAtSpace(space, henchman);
 
         //invoke its flashy event
         henchman.FlashyEvent.Invoke();
