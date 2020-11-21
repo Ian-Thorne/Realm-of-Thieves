@@ -34,6 +34,7 @@ public abstract class Card : MonoBehaviour {
     private PlayerManager controller;
     [SerializeField]
     private BoardManager board;
+    [SerializeField] //FIXME: this is only serialized for debugging/testing purposes, it shouldn't be!
     private PlayStateEnum playState;
     [SerializeField]
     private Image cardBack;

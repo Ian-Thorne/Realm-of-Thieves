@@ -20,6 +20,15 @@ public enum BoardSpaceEnum {
     O5 = 10
 }
 
+/*
+ * A struct used only to pair GameObjects with BoardSpaceEnums in the Unity
+ * inspector, then parse that data into a Dictionary
+ */
+[System.Serializable]
+public struct BoardSpaceHolderStruct {
+    public BoardSpaceEnum space;
+    public GameObject holder;
+}
 
 public class BoardManager : MonoBehaviour {
 
@@ -37,9 +46,15 @@ public class BoardManager : MonoBehaviour {
     // member variables
     //-----------------
 
-    public Dictionary<BoardSpaceEnum, HenchmanCard> board;
-    public RemoveQueue<BoardSpaceEnum> henchmenOrder;
-    public List<Card> cardsToDestroy;
+    //NOTE: this list is only public to provide a way to associate GameObjects with board
+    //      spaces in-inspector, it's parsed into a Dictionary in Start(); the GameObjects
+    //      are assumed to have exactly one child with the BoardSpaceButton script attached
+    public List<BoardSpaceHolderStruct> boardSpaceHolders;
+
+    private Dictionary<BoardSpaceEnum, HenchmanCard> board;
+    private Dictionary<BoardSpaceEnum, GameObject> visualBoardSpaces;
+    private RemoveQueue<BoardSpaceEnum> henchmenOrder;
+    private List<Card> cardsToDestroy;
 
     //--------------------
     // managing game state
@@ -59,6 +74,14 @@ public class BoardManager : MonoBehaviour {
         board.Add(O4, null);
         board.Add(O5, null);
 
+        //initialize the visual spaces
+        visualBoardSpaces = new Dictionary<BoardSpaceEnum, GameObject>();
+        foreach(BoardSpaceHolderStruct spaceHolder in boardSpaceHolders) {
+            visualBoardSpaces.Add(spaceHolder.space, spaceHolder.holder);
+            BoardSpaceButton spaceButton = spaceHolder.holder.transform.GetChild(0).GetComponent<BoardSpaceButton>();
+            spaceButton.SetupButton(this, spaceHolder.space);
+        }
+
         //initialize the henchmenOrder (empty, like the board)
         henchmenOrder = new RemoveQueue<BoardSpaceEnum>();
 
@@ -75,6 +98,24 @@ public class BoardManager : MonoBehaviour {
                 Debug.Log("Destroying a card that wasn't in the DONE state...");
             }
             Destroy(card.gameObject);
+        }
+    }
+
+    //----------------------------
+    // handling player interaction
+    //----------------------------
+
+    public void EmptyBoardSpaceClicked(BoardSpaceEnum space) {
+        Debug.Log("Empty board space " + space + " was clicked!");
+        if(EmptyBoardSpaceSelectedEvent != null) {
+            EmptyBoardSpaceSelectedEvent(space);
+        }
+    }
+
+    public void EndTurnButtonClicked() {
+        Debug.Log("The end turn button was clicked!");
+        if(EndTurnEvent != null) {
+            EndTurnEvent();
         }
     }
 
