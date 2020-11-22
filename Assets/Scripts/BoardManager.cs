@@ -240,6 +240,11 @@ public class BoardManager : MonoBehaviour {
     // affecting players
     //------------------
 
+    //FIXME: The following two methods probably don't need to exist. They're only here so that
+    //       HaveHenchmanAttackTargetPlayer() can have a henchman attack any player, though it
+    //       could probably just be "HaveHenchmanAttackItsOpponent()" and use the Card's
+    //       DirectDamageToOpponent() method. Having the ability to attack controllers isn't
+    //       necessarily a bad thing, though.
     public void DamageTargetPlayer(PlayerManager target, uint damage) {
         target.ApplyDamage(damage);
     }

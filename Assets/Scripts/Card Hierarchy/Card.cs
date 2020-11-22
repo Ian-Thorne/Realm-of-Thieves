@@ -32,8 +32,6 @@ public abstract class Card : MonoBehaviour {
     private bool isMasterPlan;
     [SerializeField]
     private PlayerManager controller;
-    [SerializeField]
-    private BoardManager board;
     [SerializeField] //FIXME: this is only serialized for debugging/testing purposes, it shouldn't be!
     private PlayStateEnum playState;
     [SerializeField]
@@ -99,7 +97,7 @@ public abstract class Card : MonoBehaviour {
 
     public void DirectHealingToController(uint healing) {
         if(playState == PlayStateEnum.BOARD) {
-            board.HealTargetPlayer(controller, healing);
+            controller.ApplyHealing(healing);
         } else {
             Debug.Log("Card trying to heal controller while not in play...");
         }
@@ -107,7 +105,7 @@ public abstract class Card : MonoBehaviour {
 
     public void DirectHealingToOpponent(uint healing) {
         if(playState == PlayStateEnum.BOARD) {
-            board.HealTargetPlayer(controller.GetOpponent(), healing);
+            controller.GetOpponent().ApplyHealing(healing);
         } else {
             Debug.Log("Card trying to heal controller's opponent while not in play...");
         }
@@ -115,7 +113,7 @@ public abstract class Card : MonoBehaviour {
 
     public void DirectDamageToController(uint damage) {
         if(playState == PlayStateEnum.BOARD) {
-            board.DamageTargetPlayer(controller, damage);
+            controller.ApplyDamage(damage);
         } else {
             Debug.Log("Card trying to damage controller while not in play...");
         }
@@ -123,7 +121,7 @@ public abstract class Card : MonoBehaviour {
 
     public void DirectDamageToOpponent(uint damage) {
         if(playState == PlayStateEnum.BOARD) {
-            board.DamageTargetPlayer(controller.GetOpponent(), damage);
+            controller.GetOpponent().ApplyDamage(damage);
         } else {
             Debug.Log("Card trying to damage controller's opponent while not in play...");
         }
