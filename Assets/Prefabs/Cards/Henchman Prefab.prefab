@@ -641,7 +641,7 @@ MonoBehaviour:
   cardName: 
   isMasterPlan: 0
   controller: {fileID: 0}
-  board: {fileID: 0}
+  playState: 0
   cardBack: {fileID: 7445510297027061357}
   attack: 0
   maxHealth: 0
@@ -815,7 +815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4614601444093857574
 RectTransform:
   m_ObjectHideFlags: 0

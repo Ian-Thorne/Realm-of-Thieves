@@ -76,14 +76,25 @@ public class HenchmanCard : Card {
         health = maxHealth;
         tempHealthBuff = 0;
         permanentHealthBuff = 0;
-        hasActed = true;
 
         UpdateAttackField();
         UpdateHealthField();
+
+        //attach HandleBeingPlayed() to the FlashyEvent, since it'll be invoked when the
+        //henchman is put into play
+        FlashyEvent.AddListener(HandleBeingPlayed);
+    }
+
+    //NOTE: This method should only be called when the henchman first enters play. It can
+    //      be attached to the FlashyEvent.
+    private void HandleBeingPlayed() {
         //the henchman is scheming (summoning sick) the first turn it comes into play,
         //unless it has the eager keyword
         if(eager) {
             AllowAction();
+        } else {
+            ActionTaken();
+            schemingMarker.SetActive(true);
         }
 
         turnsInPlay = 0;
