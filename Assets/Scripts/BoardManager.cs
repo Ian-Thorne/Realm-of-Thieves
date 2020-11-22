@@ -170,7 +170,12 @@ public class BoardManager : MonoBehaviour {
     }
 
     private void VisuallyPutHenchmanAtSpace(HenchmanCard henchman, BoardSpaceEnum space) {
-        henchman.transform.parent = visualBoardSpaces[space].transform;
+        RectTransform henchmanTransform = henchman.GetComponent<RectTransform>();
+        henchmanTransform.parent = visualBoardSpaces[space].transform;
+        henchmanTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        henchmanTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        henchmanTransform.localScale = new Vector3(1f, 1f, 1f);
+        henchmanTransform.localPosition = new Vector3(0f, 0f, 0f);
     }
 
     //returns true if successful
