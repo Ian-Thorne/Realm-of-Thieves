@@ -6,6 +6,11 @@ public class CardGameState : State {
 
     protected RoTStateMachine rsm;
 
+    void Awake() {
+        //set up the RoTStateMachine reference, it should be on the same GameObject
+        rsm = GetComponent<RoTStateMachine>();
+    }
+
     public override void Enter() {
         base.Enter();
         Debug.Log("Entering a CardGameState:");

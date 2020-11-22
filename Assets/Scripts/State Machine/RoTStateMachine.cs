@@ -25,11 +25,16 @@ public class RoTStateMachine : StateMachine {
     // managing game state
     //--------------------
 
+    //FIXME: move some of this logic to a setup state (?)
     void Start() {
         //FIXME: make sure the player's opponent is the opponent and the opponent's is the player
         //FIXME: randomly select the starting player
         activePlayer = player;
         ResetTemporaryVariables();
+
+        board.SetPlayers(player, opponent);
+
+        ChangeState<MainPhaseState>();
     }
 
     //-----------------

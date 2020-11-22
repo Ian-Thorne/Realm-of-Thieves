@@ -56,6 +56,9 @@ public class BoardManager : MonoBehaviour {
     private RemoveQueue<BoardSpaceEnum> henchmenOrder;
     private List<Card> cardsToDestroy;
 
+    private PlayerManager player;
+    private PlayerManager opponent;
+
     //--------------------
     // managing game state
     //--------------------
@@ -123,16 +126,39 @@ public class BoardManager : MonoBehaviour {
     // affecting cards in play
     //------------------------
 
-    public bool CanPutHenchmanAtSpace(BoardSpaceEnum space) {
-        //henchman can be placed if the space is empty
-        return (board[space] == null);
+    public bool CanPutHenchmanAtSpace(HenchmanCard henchman, BoardSpaceEnum space) {
+        //henchman can be placed if the space is on it's controller's side
+        bool onControllersSide = false;
+        if(henchman.GetController() == player) {
+            if((space == BoardSpaceEnum.P1) || (space == BoardSpaceEnum.P2) || (space == BoardSpaceEnum.P3) ||
+                    (space == BoardSpaceEnum.P4) || (space == BoardSpaceEnum.P5)) {
+                onControllersSide = true;
+            }
+        } else if(henchman.GetController() == opponent) {
+            if((space == BoardSpaceEnum.O1) || (space == BoardSpaceEnum.O2) || (space == BoardSpaceEnum.O3) ||
+                    (space == BoardSpaceEnum.O4) || (space == BoardSpaceEnum.O5)) {
+                onControllersSide = true;
+            }
+        } else {
+            Debug.Log("The henchman trying to be placed has a controller that's neither the player nor the opponent...");
+        }
+
+        if(onControllersSide) {
+            //the space must also be empty
+            return (board[space] == null);
+        } else {
+            return false;
+        }
     }
 
     //should only be called if CanPutHenchmanAtSpace() returns true
-    public void PutHenchmanAtSpace(BoardSpaceEnum space, HenchmanCard henchman) {
+    public void PutHenchmanAtSpace(HenchmanCard henchman, BoardSpaceEnum space) {
         //put it on the board
         board[space] = henchman;
         henchman.SetPlayState(PlayStateEnum.BOARD);
+
+        //move the henchman visually
+        VisuallyPutHenchmanAtSpace(henchman, space);
 
         //invoke its flashy event
         henchman.FlashyEvent.Invoke();
@@ -143,12 +169,16 @@ public class BoardManager : MonoBehaviour {
         henchmenOrder.Enqueue(space);
     }
 
+    private void VisuallyPutHenchmanAtSpace(HenchmanCard henchman, BoardSpaceEnum space) {
+        henchman.transform.parent = visualBoardSpaces[space].transform;
+    }
+
     //returns true if successful
     public bool TryPutHenchmanOnPlayerSide(HenchmanCard henchman) {
         for(int i = (int) BoardSpaceEnum.P1; i <= (int) BoardSpaceEnum.P5; i++) {
             BoardSpaceEnum currSpace = (BoardSpaceEnum) i;
-            if(CanPutHenchmanAtSpace(currSpace)) {
-                PutHenchmanAtSpace(currSpace, henchman);
+            if(CanPutHenchmanAtSpace(henchman, currSpace)) {
+                PutHenchmanAtSpace(henchman, currSpace);
                 return true;
             }
         }
@@ -159,8 +189,8 @@ public class BoardManager : MonoBehaviour {
     public bool TryPutHenchmanOnOpponentSide(HenchmanCard henchman) {
         for(int i = (int) BoardSpaceEnum.O1; i<= (int) BoardSpaceEnum.O5; i++) {
             BoardSpaceEnum currSpace = (BoardSpaceEnum) i;
-            if(CanPutHenchmanAtSpace(currSpace)) {
-                PutHenchmanAtSpace(currSpace, henchman);
+            if(CanPutHenchmanAtSpace(henchman, currSpace)) {
+                PutHenchmanAtSpace(henchman, currSpace);
                 return true;
             }
         }
@@ -312,6 +342,15 @@ public class BoardManager : MonoBehaviour {
             newOrder.Enqueue(henchmanSpace);
         }
         henchmenOrder = newOrder;
+    }
+
+    //----------
+    // accessors
+    //----------
+
+    public void SetPlayers(PlayerManager player, PlayerManager opponent) {
+        this.player = player;
+        this.opponent = opponent;
     }
 
     //---------------
