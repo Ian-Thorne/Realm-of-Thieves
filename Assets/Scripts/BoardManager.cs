@@ -92,19 +92,23 @@ public class BoardManager : MonoBehaviour {
         cardsToDestroy = new List<Card>();
     }
 
-    public void HandleBeginningOfTurn() {
+    //NOTE: Should be called after switching the active player!
+    public void HandleBeginningOfTurn(PlayerManager activePlayer) {
         //call HandleBeginningOfTurn() on all HenchmanCards in play, in the order they came into play
         RemoveQueue<BoardSpaceEnum> newOrder = new RemoveQueue<BoardSpaceEnum>();
         while(!henchmenOrder.IsEmpty()) {
             BoardSpaceEnum henchmanSpace = henchmenOrder.Dequeue();
             HenchmanCard henchman = board[henchmanSpace];
-            henchman.HandleBeginningOfTurn();
+            if(henchman.GetController() == activePlayer) {
+                henchman.HandleBeginningOfTurn();
+            }
             newOrder.Enqueue(henchmanSpace);
         }
         henchmenOrder = newOrder;
     }
 
-    public void HandleEndOfTurn() {
+    //NOTE: Should be called before switching the active player!
+    public void HandleEndOfTurn(PlayerManager activePlayer) {
         //fully destroy any cards (Henchman or Tactic) that left play this turn
         CleanUpDestroyedCards();
 
@@ -113,7 +117,9 @@ public class BoardManager : MonoBehaviour {
         while(!henchmenOrder.IsEmpty()) {
             BoardSpaceEnum henchmanSpace = henchmenOrder.Dequeue();
             HenchmanCard henchman = board[henchmanSpace];
-            henchman.HandleEndOfTurn();
+            if(henchman.GetController() == activePlayer) {
+                henchman.HandleEndOfTurn();
+            }
             newOrder.Enqueue(henchmanSpace);
         }
         henchmenOrder = newOrder;
