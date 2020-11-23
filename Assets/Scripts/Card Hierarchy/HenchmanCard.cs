@@ -148,6 +148,8 @@ public class HenchmanCard : Card {
     //FIXME: Should cause the BoardManager to call (Can)RemoveHenchmanFromBoard()!
     public override void RequestDestroy() {
         //request that the BoardManager destroy it
+        UpdateHealthField();
+        Flip();
     }
 
     protected override void ClickedWhileOnBoard() {
