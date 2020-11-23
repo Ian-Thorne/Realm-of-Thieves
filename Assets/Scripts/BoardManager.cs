@@ -92,8 +92,36 @@ public class BoardManager : MonoBehaviour {
         cardsToDestroy = new List<Card>();
     }
 
-    //called at the end of every turn, so "destroyed" cards can trigger closing act effects,
-    //then truly be cleaned up when those effects are done
+    public void HandleBeginningOfTurn() {
+        //call HandleBeginningOfTurn() on all HenchmanCards in play, in the order they came into play
+        RemoveQueue<BoardSpaceEnum> newOrder = new RemoveQueue<BoardSpaceEnum>();
+        while(!henchmenOrder.IsEmpty()) {
+            BoardSpaceEnum henchmanSpace = henchmenOrder.Dequeue();
+            HenchmanCard henchman = board[henchmanSpace];
+            henchman.HandleBeginningOfTurn();
+            newOrder.Enqueue(henchmanSpace);
+        }
+        henchmenOrder = newOrder;
+    }
+
+    public void HandleEndOfTurn() {
+        //fully destroy any cards (Henchman or Tactic) that left play this turn
+        CleanUpDestroyedCards();
+
+        //call HandleEndOfTurn() on all HenchmanCards in play, in the order they came into play
+        RemoveQueue<BoardSpaceEnum> newOrder = new RemoveQueue<BoardSpaceEnum>();
+        while(!henchmenOrder.IsEmpty()) {
+            BoardSpaceEnum henchmanSpace = henchmenOrder.Dequeue();
+            HenchmanCard henchman = board[henchmanSpace];
+            henchman.HandleEndOfTurn();
+            newOrder.Enqueue(henchmanSpace);
+        }
+        henchmenOrder = newOrder;
+    }
+
+    /* This method is called at the end of every turn. This allows "destroyed" cards to trigger any
+     * closing act effects, then truly be cleaned up when those effects are done.
+     */
     private void CleanUpDestroyedCards() {
         //destroying in foreach may cause problems
         foreach(Card card in cardsToDestroy) {
@@ -156,6 +184,7 @@ public class BoardManager : MonoBehaviour {
         //put it on the board
         board[space] = henchman;
         henchman.SetPlayState(PlayStateEnum.BOARD);
+        henchman.SetLocation(space);
 
         //move the henchman visually
         VisuallyPutHenchmanAtSpace(henchman, space);
@@ -201,6 +230,9 @@ public class BoardManager : MonoBehaviour {
         }
         return false;
     }
+
+    //NOTE: This may be a useful function to implement!
+    // public bool SummonToken(HenchmanCard token, bool forPlayer)
 
     public bool CanRemoveHenchmanFromBoard(BoardSpaceEnum space) {
         //henchman can be removed if the space isn't empty
@@ -349,15 +381,6 @@ public class BoardManager : MonoBehaviour {
         henchmenOrder = newOrder;
     }
 
-    //----------
-    // accessors
-    //----------
-
-    public void SetPlayers(PlayerManager player, PlayerManager opponent) {
-        this.player = player;
-        this.opponent = opponent;
-    }
-
     //---------------
     // helper methods
     //---------------
@@ -373,5 +396,14 @@ public class BoardManager : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    //----------
+    // accessors
+    //----------
+
+    public void SetPlayers(PlayerManager player, PlayerManager opponent) {
+        this.player = player;
+        this.opponent = opponent;
     }
 }

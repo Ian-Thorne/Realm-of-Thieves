@@ -20,11 +20,15 @@ public class MainPhaseState : CardGameState {
     protected override void AddListeners() {
         base.AddListeners();
         Card.CardInHandSelectedEvent += HandleCardInHandSelected;
+        HenchmanCard.HenchmanInPlaySelectedEvent += HandleHenchmanInPlaySelected;
+        BoardManager.EndTurnEvent += HandleEndOfTurn;
     }
 
     protected override void RemoveListeners() {
         base.RemoveListeners();
         Card.CardInHandSelectedEvent -= HandleCardInHandSelected;
+        HenchmanCard.HenchmanInPlaySelectedEvent -= HandleHenchmanInPlaySelected;
+        BoardManager.EndTurnEvent -= HandleEndOfTurn;
     }
 
     /*
@@ -47,5 +51,31 @@ public class MainPhaseState : CardGameState {
                 rsm.ChangeState<MainPhaseState>();
             }
         }
+    }
+
+    /*
+     * This method is called whenever the player clicks a henchman in play. It will cause the
+     * RoTStateMachine to move to the AttackingWithHenchmanState as long as the henchman is
+     * controlled by the active player and can still attack this turn.
+     *
+     * NOTE: Any behaviors related to clicking a henchman that has attacked or a henchman
+     *       controlled by the opponent should be implemented in this method.
+     */
+    private void HandleHenchmanInPlaySelected(HenchmanCard henchman) {
+        if(henchman.GetController() == rsm.GetActivePlayer()) {
+            if(!henchman.HasActedThisTurn()) {
+                rsm.SetAttackingHenchman(henchman);
+                rsm.ChangeState<AttackingWithHenchmanState>();
+            }
+        }
+    }
+
+    /*
+     * This method is called whenever the player clicks the end turn button. It will cause the
+     * RoTStateMachine to move to the TurnResetState, where it will handle all EOT effects for
+     * the player whose turn ended and all upkeep effects for the player whose turn just began.
+     */
+    private void HandleEndOfTurn() {
+        rsm.ChangeState<TurnResetState>();
     }
 }

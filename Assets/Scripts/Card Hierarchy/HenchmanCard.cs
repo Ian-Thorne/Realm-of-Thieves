@@ -69,7 +69,7 @@ public class HenchmanCard : Card {
     protected override void Start() {
         base.Start();
         //since all cards start in their owner's deck, the location should start as none
-        location = BoardSpaceEnum.NONE;
+        SetLocation(BoardSpaceEnum.NONE);
 
         tempAttackBuff = 0;
         permanentAttackBuff = 0;
@@ -83,6 +83,10 @@ public class HenchmanCard : Card {
         //attach HandleBeingPlayed() to the FlashyEvent, since it'll be invoked when the
         //henchman is put into play
         FlashyEvent.AddListener(HandleBeingPlayed);
+
+        //attach HandleBeingDestroyed() to the ClosingActEvent, since it'll be invoked
+        //when the henchman is destroyed
+        ClosingActEvent.AddListener(HandleBeingDestroyed);
     }
 
     //NOTE: This method should only be called when the henchman first enters play. It can
@@ -100,15 +104,23 @@ public class HenchmanCard : Card {
         turnsInPlay = 0;
     }
 
+    //NOTE: This method should only be called when the henchman is initially removed from
+    //      play. IT can be attached to the ClosingActEvent.
+    private void HandleBeingDestroyed() {
+        SetLocation(BoardSpaceEnum.NONE);
+        SetPlayState(PlayStateEnum.DONE);
+    }
+
     //NOTE: This should only happen if it's in play!
-    private void HandleEndOfTurn() {
+    public void HandleBeginningOfTurn() {
         //remove summoning sickness
         if(hasActed) {
             AllowAction();
-        } else {
-            Debug.Log("The turn ended and a henchman hadn't acted...");
         }
+    }
 
+    //NOTE: This should only happen if it's in play!
+    public void HandleEndOfTurn() {
         RemoveTempBuffsAndDebuffs();
 
         turnsInPlay++;
@@ -133,6 +145,7 @@ public class HenchmanCard : Card {
         }
     }
 
+    //FIXME: Should cause the BoardManager to call (Can)RemoveHenchmanFromBoard()!
     public override void RequestDestroy() {
         //request that the BoardManager destroy it
     }
@@ -289,6 +302,14 @@ public class HenchmanCard : Card {
 
     public bool IsOverAchiever() {
         return overAchiever;
+    }
+
+    public void SetLocation(BoardSpaceEnum space) {
+        location = space;
+    }
+
+    public BoardSpaceEnum GetLocation() {
+        return location;
     }
 
     public bool HasActedThisTurn() {
