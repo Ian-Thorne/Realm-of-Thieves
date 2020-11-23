@@ -15,12 +15,15 @@ public class PlayerManager : MonoBehaviour {
     [SerializeField]
     private PlayerManager opponent;
 
+    [SerializeField]
+    private GameObject activeIndicator;
+
     //--------------------
     // managing game state
     //--------------------
 
     void Start() {
-        //
+        activeIndicator.SetActive(false);
     }
 
     //-----------------------------
@@ -33,6 +36,18 @@ public class PlayerManager : MonoBehaviour {
 
     public void ApplyDamage(uint damage) {
         Debug.Log("Applying " + damage + " points of damage!");
+    }
+
+    //--------------------------
+    // interface-related methods
+    //--------------------------
+
+    public void ToggleActiveIndicator() {
+        if(activeIndicator != null) {
+            activeIndicator.SetActive(!activeIndicator.activeSelf);
+        } else {
+            Debug.Log("Player " + this.name + "'s activeIndicator was null...");
+        }
     }
 
     //-----------------
