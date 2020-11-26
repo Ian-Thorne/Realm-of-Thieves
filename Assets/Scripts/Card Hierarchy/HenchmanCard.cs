@@ -106,6 +106,9 @@ public class HenchmanCard : Card {
 
     //NOTE: This should only happen if it's in play!
     public void HandleBeginningOfTurn() {
+        if(GetPlayState() != PlayStateEnum.BOARD) {
+            Debug.Log("A henchman called HandleBeginningOfTurn() while not in the BOARD PlayState...");
+        }
         //remove summoning sickness
         if(hasActed) {
             AllowAction();
@@ -114,6 +117,9 @@ public class HenchmanCard : Card {
 
     //NOTE: This should only happen if it's in play!
     public void HandleEndOfTurn() {
+        if(GetPlayState() != PlayStateEnum.BOARD) {
+            Debug.Log("A henchman called HandleEndOfTurn() while not in the BOARD PlayState...");
+        }
         RemoveTempBuffsAndDebuffs();
 
         turnsInPlay++;
