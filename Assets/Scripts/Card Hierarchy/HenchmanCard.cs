@@ -13,6 +13,9 @@ public class HenchmanCard : Card {
     public delegate void HenchmanInPlaySelectedAction(HenchmanCard card);
     public static event HenchmanInPlaySelectedAction HenchmanInPlaySelectedEvent;
 
+    public delegate void HenchmanRequestedDestructionAction(BoardSpaceEnum space);
+    public static event HenchmanRequestedDestructionAction HenchmanRequestedDestructionEvent;
+
     //-----------------
     // member variables
     //-----------------
@@ -69,6 +72,7 @@ public class HenchmanCard : Card {
     protected override void Start() {
         base.Start();
         //since all cards start in their owner's deck, the location should start as none
+        //FIXME: The PlayerManager should initialize the HenchmanCard's location.
         SetLocation(BoardSpaceEnum.NONE);
 
         tempAttackBuff = 0;
@@ -83,10 +87,6 @@ public class HenchmanCard : Card {
         //attach HandleBeingPlayed() to the FlashyEvent, since it'll be invoked when the
         //henchman is put into play
         FlashyEvent.AddListener(HandleBeingPlayed);
-
-        //attach HandleBeingDestroyed() to the ClosingActEvent, since it'll be invoked
-        //when the henchman is destroyed
-        ClosingActEvent.AddListener(HandleBeingDestroyed);
     }
 
     //NOTE: This method should only be called when the henchman first enters play. It can
@@ -102,13 +102,6 @@ public class HenchmanCard : Card {
         }
 
         turnsInPlay = 0;
-    }
-
-    //NOTE: This method should only be called when the henchman is initially removed from
-    //      play. IT can be attached to the ClosingActEvent.
-    private void HandleBeingDestroyed() {
-        SetLocation(BoardSpaceEnum.NONE);
-        SetPlayState(PlayStateEnum.DONE);
     }
 
     //NOTE: This should only happen if it's in play!
@@ -145,11 +138,11 @@ public class HenchmanCard : Card {
         }
     }
 
-    //FIXME: Should cause the BoardManager to call (Can)RemoveHenchmanFromBoard()!
     public override void RequestDestroy() {
         //request that the BoardManager destroy it
-        UpdateHealthField();
-        Flip();
+        if(HenchmanRequestedDestructionEvent != null) {
+            HenchmanRequestedDestructionEvent(location);
+        }
     }
 
     protected override void ClickedWhileOnBoard() {

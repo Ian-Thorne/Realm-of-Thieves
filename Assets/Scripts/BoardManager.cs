@@ -92,6 +92,14 @@ public class BoardManager : MonoBehaviour {
         cardsToDestroy = new List<Card>();
     }
 
+    void OnEnable() {
+        HenchmanCard.HenchmanRequestedDestructionEvent += HandleRequestedHenchmanDestruction;
+    }
+
+    void OnDisable() {
+        HenchmanCard.HenchmanRequestedDestructionEvent -= HandleRequestedHenchmanDestruction;
+    }
+
     //NOTE: Should be called after switching the active player!
     public void HandleBeginningOfTurn(PlayerManager activePlayer) {
         //call HandleBeginningOfTurn() on all HenchmanCards in play, in the order they came into play
@@ -133,6 +141,9 @@ public class BoardManager : MonoBehaviour {
         foreach(Card card in cardsToDestroy) {
             if(card.GetPlayState() != PlayStateEnum.DONE) {
                 Debug.Log("Destroying a card that wasn't in the DONE state...");
+            }
+            if((card.GetType() == typeof(HenchmanCard)) && ((HenchmanCard) card).GetLocation() != BoardSpaceEnum.NONE) {
+                Debug.Log("Destroying a henchman card that wasn't on board space NONE...");
             }
             Destroy(card.gameObject);
         }
@@ -251,15 +262,20 @@ public class BoardManager : MonoBehaviour {
 
         //remove it from the board
         board[space] = null;
+        henchman.SetPlayState(PlayStateEnum.DONE);
+        henchman.SetLocation(BoardSpaceEnum.NONE);
 
         //remove it from the order
         henchmenOrder.RemoveArbitrary(space);
 
+        //remove the henchman visually
+        henchman.gameObject.SetActive(false);
+
+        //add it to the list of cards to be destroyed
+        cardsToDestroy.Add(henchman);
+
         //invoke its closing-act event
         henchman.ClosingActEvent.Invoke();
-
-        //change its play state
-        henchman.SetPlayState(PlayStateEnum.DONE);
     }
 
     public bool CanHenchmenFight(BoardSpaceEnum playerSpace, BoardSpaceEnum opponentSpace) {
@@ -385,6 +401,16 @@ public class BoardManager : MonoBehaviour {
             newOrder.Enqueue(henchmanSpace);
         }
         henchmenOrder = newOrder;
+    }
+
+    private void HandleRequestedHenchmanDestruction(BoardSpaceEnum space) {
+        Debug.Log("The henchman at " + space + " has requested to be destroyed!");
+        if(CanRemoveHenchmanFromBoard(space)) {
+            Debug.Log("There was a henchman at that space. Destroying it!");
+            RemoveHenchmanFromBoard(space);
+        } else {
+            Debug.Log("There wasn't a henchman at that space...");
+        }
     }
 
     //---------------

@@ -164,6 +164,7 @@ public abstract class Card : MonoBehaviour {
         return playState;
     }
 
+    //NOTE: This method will only be called externally!
     public void SetPlayState(PlayStateEnum state) {
         playState = state;
     }
