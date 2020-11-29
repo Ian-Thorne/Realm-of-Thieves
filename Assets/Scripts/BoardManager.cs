@@ -319,7 +319,8 @@ public class BoardManager : MonoBehaviour {
         int excess = (int) playerHenchman.GetAttack() - opponentHenchman.GetHealth();
         playerHenchman.ApplyDamage((int) opponentHenchman.GetAttack());
         opponentHenchman.ApplyDamage((int) playerHenchman.GetAttack());
-        if(excess > 0) {
+        if((excess > 0) && playerHenchman.IsOverAchiever()) {
+            Debug.Log("ROLLING DAMAGE OVER");
             uint reduction = playerHenchman.GetAttack() - (uint) excess;
             HaveHenchmanAttackTargetPlayer(playerSpace, opponentHenchman.GetController(), damageReduction: reduction);
         }
