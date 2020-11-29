@@ -147,6 +147,7 @@ public class BoardManager : MonoBehaviour {
             }
             Destroy(card.gameObject);
         }
+        cardsToDestroy = new List<Card>();
     }
 
     //----------------------------
