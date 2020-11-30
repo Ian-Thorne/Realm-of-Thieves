@@ -153,7 +153,7 @@ RectTransform:
   m_Children:
   - {fileID: 593433220}
   - {fileID: 566035159}
-  - {fileID: 1246856282}
+  - {fileID: 1487415781}
   m_Father: {fileID: 398599916}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -185,6 +185,7 @@ MonoBehaviour:
   - {fileID: 3094538972895442051, guid: 4bf683aa1f339407b8afcf146dc80a55, type: 3}
   - {fileID: 3094538972895442051, guid: 4bf683aa1f339407b8afcf146dc80a55, type: 3}
   - {fileID: 3094538972895442051, guid: 4bf683aa1f339407b8afcf146dc80a55, type: 3}
+  cardsToDestroy: []
 --- !u!1 &40737924
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,6 +851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   opponent: {fileID: 590163608}
+  deck: {fileID: 12826113}
   activeIndicator: {fileID: 1912284384}
 --- !u!1 &427750976
 GameObject:
@@ -1136,7 +1138,7 @@ RectTransform:
   m_Children:
   - {fileID: 1607832300}
   - {fileID: 1441431975}
-  - {fileID: 1487415781}
+  - {fileID: 1246856282}
   m_Father: {fileID: 590163609}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1168,6 +1170,7 @@ MonoBehaviour:
   - {fileID: 3094538972895442051, guid: 9c9c538375a894d3db11a8ae3e8d6f20, type: 3}
   - {fileID: 3094538972895442051, guid: 9c9c538375a894d3db11a8ae3e8d6f20, type: 3}
   - {fileID: 3094538972895442051, guid: 9c9c538375a894d3db11a8ae3e8d6f20, type: 3}
+  cardsToDestroy: []
 --- !u!1 &577038476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1343,6 +1346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   opponent: {fileID: 398599917}
+  deck: {fileID: 576981300}
   activeIndicator: {fileID: 2112867261}
 --- !u!224 &590163609
 RectTransform:
@@ -2910,12 +2914,12 @@ RectTransform:
   m_Children:
   - {fileID: 166562872}
   - {fileID: 353379841}
-  m_Father: {fileID: 12826112}
+  m_Father: {fileID: 576981299}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -60, y: 0}
+  m_AnchoredPosition: {x: -60, y: 70}
   m_SizeDelta: {x: 14, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1246856283
@@ -3575,12 +3579,12 @@ RectTransform:
   m_Children:
   - {fileID: 1432016149}
   - {fileID: 1021656169}
-  m_Father: {fileID: 576981299}
+  m_Father: {fileID: 12826112}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 20}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -60, y: 0}
+  m_AnchoredPosition: {x: -60, y: -70}
   m_SizeDelta: {x: 14, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1487415782

@@ -54,7 +54,6 @@ public class BoardManager : MonoBehaviour {
     private Dictionary<BoardSpaceEnum, HenchmanCard> board;
     private Dictionary<BoardSpaceEnum, GameObject> visualBoardSpaces;
     private RemoveQueue<BoardSpaceEnum> henchmenOrder;
-    private List<Card> cardsToDestroy;
 
     private PlayerManager player;
     private PlayerManager opponent;
@@ -87,9 +86,6 @@ public class BoardManager : MonoBehaviour {
 
         //initialize the henchmenOrder (empty, like the board)
         henchmenOrder = new RemoveQueue<BoardSpaceEnum>();
-
-        //initialize the list of cards to destroy at EOT
-        cardsToDestroy = new List<Card>();
     }
 
     void OnEnable() {
@@ -117,9 +113,6 @@ public class BoardManager : MonoBehaviour {
 
     //NOTE: Should be called before switching the active player!
     public void HandleEndOfTurn(PlayerManager activePlayer) {
-        //fully destroy any cards (Henchman or Tactic) that left play this turn
-        CleanUpDestroyedCards();
-
         //call HandleEndOfTurn() on all HenchmanCards in play, in the order they came into play
         RemoveQueue<BoardSpaceEnum> newOrder = new RemoveQueue<BoardSpaceEnum>();
         while(!henchmenOrder.IsEmpty()) {
@@ -131,23 +124,6 @@ public class BoardManager : MonoBehaviour {
             newOrder.Enqueue(henchmanSpace);
         }
         henchmenOrder = newOrder;
-    }
-
-    /* This method is called at the end of every turn. This allows "destroyed" cards to trigger any
-     * closing act effects, then truly be cleaned up when those effects are done.
-     */
-    private void CleanUpDestroyedCards() {
-        //destroying in foreach may cause problems
-        foreach(Card card in cardsToDestroy) {
-            if(card.GetPlayState() != PlayStateEnum.DONE) {
-                Debug.Log("Destroying a card that wasn't in the DONE state...");
-            }
-            if((card.GetType() == typeof(HenchmanCard)) && ((HenchmanCard) card).GetLocation() != BoardSpaceEnum.NONE) {
-                Debug.Log("Destroying a henchman card that wasn't on board space NONE...");
-            }
-            Destroy(card.gameObject);
-        }
-        cardsToDestroy = new List<Card>();
     }
 
     //----------------------------
@@ -218,7 +194,7 @@ public class BoardManager : MonoBehaviour {
 
     private void VisuallyPutHenchmanAtSpace(HenchmanCard henchman, BoardSpaceEnum space) {
         RectTransform henchmanTransform = henchman.GetComponent<RectTransform>();
-        henchmanTransform.parent = visualBoardSpaces[space].transform;
+        henchmanTransform.SetParent(visualBoardSpaces[space].transform);
         henchmanTransform.anchorMin = new Vector2(0.5f, 0.5f);
         henchmanTransform.anchorMax = new Vector2(0.5f, 0.5f);
         henchmanTransform.localScale = new Vector3(1f, 1f, 1f);
@@ -272,8 +248,8 @@ public class BoardManager : MonoBehaviour {
         //remove the henchman visually
         henchman.gameObject.SetActive(false);
 
-        //add it to the list of cards to be destroyed
-        cardsToDestroy.Add(henchman);
+        //set up the henchman to be destroyed
+        henchman.GetController().GetDeck().DestroyCard(henchman);
 
         //invoke its closing-act event
         henchman.ClosingActEvent.Invoke();

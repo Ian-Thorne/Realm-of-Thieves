@@ -72,7 +72,6 @@ public class HenchmanCard : Card {
     protected override void Start() {
         base.Start();
         //since all cards start in their owner's deck, the location should start as none
-        //FIXME: The PlayerManager should initialize the HenchmanCard's location.
         SetLocation(BoardSpaceEnum.NONE);
 
         tempAttackBuff = 0;

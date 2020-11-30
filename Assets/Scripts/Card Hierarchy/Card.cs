@@ -42,9 +42,7 @@ public abstract class Card : MonoBehaviour {
     //--------------------
 
     protected virtual void Start() {
-        //FIXME: This is only for testing basic interaction! Once the PlayerManager is fleshed out, it
-        //       should be responsible for initializing the playState's of all the cards in its deck!
-        SetPlayState(PlayStateEnum.HAND);
+        //
     }
 
     public abstract void RequestDestroy();
@@ -158,6 +156,10 @@ public abstract class Card : MonoBehaviour {
 
     public PlayerManager GetController() {
         return controller;
+    }
+
+    public void SetController(PlayerManager player) {
+        controller = player;
     }
 
     public PlayStateEnum GetPlayState() {

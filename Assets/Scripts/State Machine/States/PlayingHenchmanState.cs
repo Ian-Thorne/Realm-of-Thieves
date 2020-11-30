@@ -10,6 +10,9 @@ public class PlayingHenchmanState : CardGameState {
         base.Enter();
         Debug.Log("Entering PlayingHenchmanState");
 
+        //the card being played must be owned by the active player
+        Debug.Assert(rsm.GetCardToBePlayed().GetController() == rsm.GetActivePlayer());
+
         //the card being played must be a henchman
         Debug.Assert(rsm.GetCardToBePlayed().GetType() == typeof(HenchmanCard));
         henchmanToBePlayed = (HenchmanCard) rsm.GetCardToBePlayed();
@@ -36,6 +39,7 @@ public class PlayingHenchmanState : CardGameState {
      */
     private void HandleEmptyBoardSpaceSelected(BoardSpaceEnum space) {
         if(rsm.GetBoard().CanPutHenchmanAtSpace(henchmanToBePlayed, space)) {
+            rsm.GetActivePlayer().GetDeck().RemoveCardFromHand(henchmanToBePlayed, true);
             rsm.GetBoard().PutHenchmanAtSpace(henchmanToBePlayed, space);
         }
         rsm.ChangeState<MainPhaseState>();

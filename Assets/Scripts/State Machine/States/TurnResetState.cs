@@ -12,10 +12,12 @@ public class TurnResetState : CardGameState {
         Debug.Log("Entering TurnResetState");
 
         rsm.GetBoard().HandleEndOfTurn(rsm.GetActivePlayer());
+        rsm.GetActivePlayer().HandleEndOfTurn();
 
         rsm.ToggleActivePlayer();
 
         rsm.GetBoard().HandleBeginningOfTurn(rsm.GetActivePlayer());
+        rsm.GetActivePlayer().HandleBeginningOfTurn();
 
         StartCoroutine(StartNextTurn());
     }

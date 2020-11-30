@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour {
     private PlayerManager opponent;
 
     [SerializeField]
+    private DeckManager deck;
+    [SerializeField]
     private GameObject activeIndicator;
 
     //--------------------
@@ -24,6 +26,16 @@ public class PlayerManager : MonoBehaviour {
 
     void Start() {
         activeIndicator.SetActive(false);
+    }
+
+    public void HandleBeginningOfTurn() {
+        //draw a card for the turn
+        deck.DrawCards(1);
+    }
+
+    public void HandleEndOfTurn() {
+        //clean up any cards that have been "destroyed"
+        deck.CleanUpDestroyedCards();
     }
 
     //-----------------------------
@@ -56,5 +68,9 @@ public class PlayerManager : MonoBehaviour {
 
     public PlayerManager GetOpponent() {
         return opponent;
+    }
+
+    public DeckManager GetDeck() {
+        return deck;
     }
 }
