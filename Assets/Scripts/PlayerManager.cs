@@ -10,7 +10,6 @@ public class PlayerManager : MonoBehaviour {
 
     //health representation
     //something related to prize card thresholds
-    //DeckManager reference
 
     [SerializeField]
     private PlayerManager opponent;

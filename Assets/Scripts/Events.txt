@@ -1,0 +1,12 @@
+The events that states listen to are the following:
+
+    1. CardInHandSelectedEvent (comes from Card)
+    2. HenchmanInPlaySelectedEvent (comes from HenchmanCard)
+    3. EmptyBoardSpaceSelectedEvent (comes from BoardManager)
+    4. EndTurnEvent (comes from BoardManager, caused by the end turn button)
+
+The events that managers listen to are the following:
+
+    1. HenchmanRequestedDestructionEvent:
+        - Comes from HenchmanCard
+        - Handled by BoardManager
