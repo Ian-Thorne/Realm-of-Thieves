@@ -61,7 +61,7 @@ public class DeckManager : MonoBehaviour {
             instantiatedCard.gameObject.SetActive(false);
             deck.Add(instantiatedCard);
         }
-        if(deck.Count < Constants.MinDeckSize) {
+        if((uint) deck.Count < Constants.MinDeckSize) {
             Debug.Log("The DeckManager named " + this.name + " didn't have at least " + Constants.MinDeckSize + " cards in it...");
         }
         ShuffleDeck();
@@ -72,7 +72,7 @@ public class DeckManager : MonoBehaviour {
 
         //set three cards aside as prize cards
         prizeCards = new List<Card>();
-        for(int i = 0; i < Constants.NumPrizeCards; i++) {
+        for(uint i = 0; i < Constants.NumPrizeCards; i++) {
             Card prizeCard = RemoveTopCardOfDeck();
             Debug.Log("Adding prize card " + prizeCard.name);
             prizeCard.SetPlayState(PlayStateEnum.PRIZE);
@@ -143,8 +143,8 @@ public class DeckManager : MonoBehaviour {
         VisuallyPutCardInHand(card);
     }
 
-    public void DrawCards(int numCards) {
-        for(int i = 0; i < numCards; i++) {
+    public void DrawCards(uint numCards) {
+        for(uint i = 0; i < numCards; i++) {
             DrawCard();
         }
     }
