@@ -60,6 +60,7 @@ public class PlayerManager : MonoBehaviour {
 
     public void HandleBeginningOfTurn() {
         ToggleActiveIndicator();
+        deck.ToggleHandVisibility();
         //draw a card for the turn
         deck.DrawCards(1);
     }
@@ -67,6 +68,7 @@ public class PlayerManager : MonoBehaviour {
     public void HandleEndOfTurn() {
         //clean up any cards that have been "destroyed"
         deck.CleanUpDestroyedCards();
+        deck.ToggleHandVisibility();
         ToggleActiveIndicator();
     }
 

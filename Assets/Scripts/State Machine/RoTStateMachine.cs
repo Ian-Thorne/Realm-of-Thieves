@@ -30,8 +30,12 @@ public class RoTStateMachine : StateMachine {
         //FIXME: make sure the player's opponent is the opponent and the opponent's is the player
         //FIXME: randomly select the starting player
         activePlayer = player;
+
         //FIXME: this should be a private method
         activePlayer.ToggleActiveIndicator();
+        //FIXME: this should be more elegant
+        activePlayer.GetOpponent().GetDeck().ToggleHandVisibility();
+
         ResetTemporaryVariables();
 
         board.SetPlayers(player, opponent);

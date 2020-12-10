@@ -183,6 +183,20 @@ public class DeckManager : MonoBehaviour {
         cardsToDestroy = new List<Card>();
     }
 
+    /*
+     * This method will call Flip() on all cards in this DeckManager's hand. It's called at
+     * the beginning and end of each players' turn to make sure their hand is only visible
+     * during their own turn.
+     *
+     * Note: If the game ever stops having both players use the same computer, this method
+     *       likely won't be needed anymore.
+     */
+    public void ToggleHandVisibility() {
+        foreach(Card card in hand) {
+            card.Flip();
+        }
+    }
+
     //---------------
     // helper methods
     //---------------
