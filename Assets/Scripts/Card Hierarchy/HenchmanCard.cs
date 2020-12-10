@@ -54,6 +54,8 @@ public class HenchmanCard : Card {
     private Text healthField;
     [SerializeField]
     private GameObject schemingMarker;
+    [SerializeField]
+    private GameObject actedMarker;
 
     //---------------
     // keyword events
@@ -83,6 +85,8 @@ public class HenchmanCard : Card {
         UpdateAttackField();
         UpdateHealthField();
 
+        actedMarker.SetActive(false);
+
         //attach HandleBeingPlayed() to the FlashyEvent, since it'll be invoked when the
         //henchman is put into play
         FlashyEvent.AddListener(HandleBeingPlayed);
@@ -96,8 +100,8 @@ public class HenchmanCard : Card {
         if(eager) {
             AllowAction();
         } else {
-            ActionTaken();
             schemingMarker.SetActive(true);
+            ActionTaken();
         }
 
         turnsInPlay = 0;
@@ -121,6 +125,8 @@ public class HenchmanCard : Card {
         }
         RemoveTempBuffsAndDebuffs();
 
+        actedMarker.SetActive(false);
+
         turnsInPlay++;
     }
 
@@ -134,6 +140,9 @@ public class HenchmanCard : Card {
 
     public void ActionTaken() {
         hasActed = true;
+        if(!schemingMarker.activeSelf) {
+            actedMarker.SetActive(true);
+        }
     }
 
     private void AllowAction() {

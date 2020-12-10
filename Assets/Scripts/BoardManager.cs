@@ -322,19 +322,6 @@ public class BoardManager : MonoBehaviour {
     // affecting players
     //------------------
 
-    //FIXME: The following two methods probably don't need to exist. They're only here so that
-    //       HaveHenchmanAttackTargetPlayer() can have a henchman attack any player, though it
-    //       could probably just be "HaveHenchmanAttackItsOpponent()" and use the Card's
-    //       DirectDamageToOpponent() method. Having the ability to attack controllers isn't
-    //       necessarily a bad thing, though.
-    public void DamageTargetPlayer(PlayerManager target, uint damage) {
-        target.ApplyDamage(damage);
-    }
-
-    public void HealTargetPlayer(PlayerManager target, uint healing) {
-        target.ApplyHealing(healing);
-    }
-
     public bool CanHenchmanAttackTargetPlayer(BoardSpaceEnum henchmanSpace, PlayerManager target) {
         HenchmanCard henchman = board[henchmanSpace];
         if(henchman != null) {
@@ -357,7 +344,7 @@ public class BoardManager : MonoBehaviour {
     public void HaveHenchmanAttackTargetPlayer(BoardSpaceEnum henchmanSpace, PlayerManager target, uint damageReduction = 0) {
         HenchmanCard henchman = board[henchmanSpace];
         if(henchman.GetAttack() > 0) {
-            DamageTargetPlayer(target, henchman.GetAttack() - damageReduction);
+            target.ApplyDamage(henchman.GetAttack() - damageReduction);
         }
         //trigger rush for combat damage
         henchman.RushEvent.Invoke();

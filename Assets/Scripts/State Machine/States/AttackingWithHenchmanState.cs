@@ -16,11 +16,13 @@ public class AttackingWithHenchmanState : CardGameState {
     protected override void AddListeners() {
         base.AddListeners();
         HenchmanCard.HenchmanInPlaySelectedEvent += HandleHenchmanInPlaySelected;
+        PlayerManager.PlayerSelectedEvent += HandlePlayerSelected;
     }
 
     protected override void RemoveListeners() {
         base.RemoveListeners();
         HenchmanCard.HenchmanInPlaySelectedEvent -= HandleHenchmanInPlaySelected;
+        PlayerManager.PlayerSelectedEvent -= HandlePlayerSelected;
     }
 
     /*
@@ -36,6 +38,21 @@ public class AttackingWithHenchmanState : CardGameState {
         BoardSpaceEnum targetLocation = henchman.GetLocation();
         if(rsm.GetBoard().CanHenchmenFight(attackingLocation, targetLocation)) {
             rsm.GetBoard().HaveHenchmenFight(attackingLocation, targetLocation);
+        }
+        rsm.ChangeState<MainPhaseState>();
+    }
+
+    /*
+     * This method is called whenever a player clicks either player's portrait. If
+     * that player is the non-active player, the attacking henchman will attack it,
+     * then the RoTStateMachine will move back to the MainPhaseState. If the clicked
+     * player portrait is the active player's, the MainPhaseState will also be
+     * re-entered.
+     */
+    private void HandlePlayerSelected(PlayerManager player) {
+        BoardSpaceEnum attackingLocation = rsm.GetAttackingHenchman().GetLocation();
+        if(rsm.GetBoard().CanHenchmanAttackTargetPlayer(attackingLocation, player)) {
+            rsm.GetBoard().HaveHenchmanAttackTargetPlayer(attackingLocation, player);
         }
         rsm.ChangeState<MainPhaseState>();
     }

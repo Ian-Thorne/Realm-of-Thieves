@@ -159,7 +159,7 @@ public class DeckManager : MonoBehaviour {
             PutCardInHand(prizeCard);
             owner.HandleReceivedPrizeCard(Constants.NumPrizeCards - (uint) prizeCards.Count);
         } else {
-            Debug.Log("Trying to draw a prize card from a deck with none left...");
+            Debug.Log("Trying to draw a prize card from a DeckManager with none left...");
         }
     }
 

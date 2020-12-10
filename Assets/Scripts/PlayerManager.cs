@@ -12,6 +12,9 @@ public class PlayerManager : MonoBehaviour {
     public delegate void PlayerReceivedPrizeCardAction(PlayerManager recipient);
     public static event PlayerReceivedPrizeCardAction PlayerReceivedPrizeCardEvent;
 
+    public delegate void PlayerSelectedAction(PlayerManager player);
+    public static event PlayerSelectedAction PlayerSelectedEvent;
+
     //-----------------
     // member variables
     //-----------------
@@ -146,6 +149,12 @@ public class PlayerManager : MonoBehaviour {
             activeIndicator.SetActive(!activeIndicator.activeSelf);
         } else {
             Debug.Log("Player " + this.name + "'s activeIndicator was null...");
+        }
+    }
+
+    public void PlayerClicked() {
+        if(PlayerSelectedEvent != null) {
+            PlayerSelectedEvent(this);
         }
     }
 
