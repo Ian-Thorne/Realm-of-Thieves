@@ -4,6 +4,14 @@ using UnityEngine;
 
 public static class Constants {
 
+    //--------------------------------
+    // PlayerManager-related constants
+    //--------------------------------
+
+    public const uint FirstHealthThreshold = 5;
+    public const uint SecondHealthThreshold = 10;
+    public const uint ThirdHealthThreshold = 15;
+
     //------------------------------
     // DeckManager-related constants
     //------------------------------

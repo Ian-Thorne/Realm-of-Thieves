@@ -30,6 +30,7 @@ public class RoTStateMachine : StateMachine {
         //FIXME: make sure the player's opponent is the opponent and the opponent's is the player
         //FIXME: randomly select the starting player
         activePlayer = player;
+        //FIXME: this should be a private method
         activePlayer.ToggleActiveIndicator();
         ResetTemporaryVariables();
 
@@ -56,9 +57,7 @@ public class RoTStateMachine : StateMachine {
 
     public void ToggleActivePlayer() {
         //FIXME: Remove or change the logic about toggling indicators!
-        activePlayer.ToggleActiveIndicator();
         activePlayer = activePlayer.GetOpponent();
-        activePlayer.ToggleActiveIndicator();
     }
 
     public PlayerManager GetActivePlayer() {

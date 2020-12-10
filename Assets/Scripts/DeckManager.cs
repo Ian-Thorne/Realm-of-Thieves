@@ -157,8 +157,10 @@ public class DeckManager : MonoBehaviour {
             prizeCards.RemoveAt(lastIndex);
             visualPrizeCardText.text = prizeCards.Count.ToString();
             PutCardInHand(prizeCard);
+            owner.HandleReceivedPrizeCard(Constants.NumPrizeCards - (uint) prizeCards.Count);
+        } else {
+            Debug.Log("Trying to draw a prize card from a deck with none left...");
         }
-        //FIXME: notify the owning player manager of the number of prize cards remaining
     }
 
     /*

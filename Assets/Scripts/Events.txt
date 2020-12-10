@@ -10,3 +10,6 @@ The events that managers listen to are the following:
     1. HenchmanRequestedDestructionEvent:
         - Comes from HenchmanCard
         - Handled by BoardManager
+    2. PlayerReceivedPrizeCardEvent:
+        - Comes from PlayerManager
+        - Handled by BoardManager

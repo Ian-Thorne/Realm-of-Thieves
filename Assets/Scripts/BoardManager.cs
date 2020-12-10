@@ -90,10 +90,12 @@ public class BoardManager : MonoBehaviour {
 
     void OnEnable() {
         HenchmanCard.HenchmanRequestedDestructionEvent += HandleRequestedHenchmanDestruction;
+        PlayerManager.PlayerReceivedPrizeCardEvent += TriggerVengeanceEvents;
     }
 
     void OnDisable() {
         HenchmanCard.HenchmanRequestedDestructionEvent -= HandleRequestedHenchmanDestruction;
+        PlayerManager.PlayerReceivedPrizeCardEvent -= TriggerVengeanceEvents;
     }
 
     //NOTE: Should be called after switching the active player!
