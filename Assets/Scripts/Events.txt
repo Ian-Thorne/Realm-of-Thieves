@@ -14,3 +14,6 @@ The events that managers listen to are the following:
     2. PlayerReceivedPrizeCardEvent:
         - Comes from PlayerManager
         - Handled by BoardManager
+    3. PlayerWonEvent:
+        - Comes from PlayerManager
+        - Handled by RoTStateMachine

@@ -15,6 +15,9 @@ public class PlayerManager : MonoBehaviour {
     public delegate void PlayerSelectedAction(PlayerManager player);
     public static event PlayerSelectedAction PlayerSelectedEvent;
 
+    public delegate void PlayerWonAction(PlayerManager winner);
+    public static event PlayerWonAction PlayerWonEvent;
+
     //-----------------
     // member variables
     //-----------------
@@ -74,7 +77,9 @@ public class PlayerManager : MonoBehaviour {
 
     public void HandleReceivedPrizeCard(uint prizeCardsStolen) {
         if(prizeCardsStolen == Constants.NumPrizeCards) {
-            //FIXME: win the game
+            if(PlayerWonEvent != null) {
+                PlayerWonEvent(this);
+            }
         } else if(prizeCardsStolen < Constants.NumPrizeCards) {
             opponent.StartPrizeCardThreshold((int) prizeCardsStolen);
             if(PlayerReceivedPrizeCardEvent != null) {

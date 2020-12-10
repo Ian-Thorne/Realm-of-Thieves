@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoTStateMachine : StateMachine {
 
@@ -41,6 +42,24 @@ public class RoTStateMachine : StateMachine {
         board.SetPlayers(player, opponent);
 
         ChangeState<MainPhaseState>();
+    }
+
+    void OnEnable() {
+        PlayerManager.PlayerWonEvent += HandlePlayerWon;
+    }
+
+    void OnDisable() {
+        PlayerManager.PlayerWonEvent -= HandlePlayerWon;
+    }
+
+    //FIXME: there needs to be a delay!
+    private void HandlePlayerWon(PlayerManager winner) {
+        if(winner == player) {
+            SceneManager.LoadScene("Player Win Screen");
+        } else {
+            Debug.Assert(winner == opponent);
+            SceneManager.LoadScene("Opponent Win Screen");
+        }
     }
 
     //-----------------

@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Henchman Demo.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/PlayerManager Playground.unity
+    guid: d811a050cc9824b35b4ca961ac5658d9
+  - enabled: 1
+    path: Assets/Scenes/Player Win Screen.unity
+    guid: 2fb5e237656b140b595fd2a945fcbe6c
+  - enabled: 1
+    path: Assets/Scenes/Opponent Win Screen.unity
+    guid: 5b9bf3928f01749229cdca8849180561
   m_configObjects: {}
