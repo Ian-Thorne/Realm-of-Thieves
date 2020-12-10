@@ -303,6 +303,19 @@ public class BoardManager : MonoBehaviour {
         playerHenchman.ActionTaken();
     }
 
+    //this method assumes the new henchman hasn't yet been added to henchmenOrder
+    private void TriggerAttentionSeekerEvents() {
+        //invoke attention-seeker events on all henchman, in the order they came into play
+        RemoveQueue<BoardSpaceEnum> newOrder = new RemoveQueue<BoardSpaceEnum>();
+        while(!henchmenOrder.IsEmpty()) {
+            BoardSpaceEnum henchmanSpace = henchmenOrder.Dequeue();
+            HenchmanCard henchman = board[henchmanSpace];
+            henchman.AttentionSeekerEvent.Invoke();
+            newOrder.Enqueue(henchmanSpace);
+        }
+        henchmenOrder = newOrder;
+    }
+
     //------------------
     // affecting players
     //------------------
@@ -363,19 +376,6 @@ public class BoardManager : MonoBehaviour {
                 //only invoke the event if the recipient of the prize card was not the henchman's controller
                 henchman.VengeanceEvent.Invoke();
             }
-            newOrder.Enqueue(henchmanSpace);
-        }
-        henchmenOrder = newOrder;
-    }
-
-    //this method assumes the new henchman hasn't yet been added to henchmenOrder
-    private void TriggerAttentionSeekerEvents() {
-        //invoke attention-seeker events on all henchman, in the order they came into play
-        RemoveQueue<BoardSpaceEnum> newOrder = new RemoveQueue<BoardSpaceEnum>();
-        while(!henchmenOrder.IsEmpty()) {
-            BoardSpaceEnum henchmanSpace = henchmenOrder.Dequeue();
-            HenchmanCard henchman = board[henchmanSpace];
-            henchman.AttentionSeekerEvent.Invoke();
             newOrder.Enqueue(henchmanSpace);
         }
         henchmenOrder = newOrder;
