@@ -640,6 +640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: Durable Daredevil
+  cost: 1
   isMasterPlan: 0
   controller: {fileID: 0}
   playState: 0

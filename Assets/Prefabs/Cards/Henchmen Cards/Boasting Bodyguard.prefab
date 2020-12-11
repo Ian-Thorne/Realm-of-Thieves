@@ -640,6 +640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: Boasting Bodyguard
+  cost: 3
   isMasterPlan: 0
   controller: {fileID: 0}
   playState: 0

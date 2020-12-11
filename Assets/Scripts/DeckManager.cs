@@ -192,6 +192,10 @@ public class DeckManager : MonoBehaviour {
         cardsToDestroy = new List<Card>();
     }
 
+    //--------------------------
+    // interface-related methods
+    //--------------------------
+
     /*
      * This method will call Flip() on all cards in this DeckManager's hand. It's called at
      * the beginning and end of each players' turn to make sure their hand is only visible

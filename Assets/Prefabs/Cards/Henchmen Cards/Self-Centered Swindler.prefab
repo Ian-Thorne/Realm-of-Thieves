@@ -719,6 +719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: Self-Centered Swindler
+  cost: 2
   isMasterPlan: 0
   controller: {fileID: 0}
   playState: 0

@@ -719,6 +719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: Greedy Goblin
+  cost: 3
   isMasterPlan: 0
   controller: {fileID: 0}
   playState: 0

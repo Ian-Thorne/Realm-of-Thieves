@@ -37,6 +37,15 @@ public class ManaManager : MonoBehaviour
         SetMaxMana(maxMana + amount);
     }
 
+    public void DecreaseMaxManaBy(uint amount) {
+        uint newMaxMana = (amount > maxMana) ? 0 : maxMana - amount;
+        SetMaxMana(newMaxMana);
+        //if the new max is less than what the player has, decrease their temp mana as well
+        if(newMaxMana < tempMana) {
+            SetTempMana(newMaxMana);
+        }
+    }
+
     public void IncreaseTempManaBy(uint amount) {
         SetTempMana(tempMana + amount);
     }

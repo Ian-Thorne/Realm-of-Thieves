@@ -39,7 +39,7 @@ public class PlayingHenchmanState : CardGameState {
      */
     private void HandleEmptyBoardSpaceSelected(BoardSpaceEnum space) {
         if(rsm.GetBoard().CanPutHenchmanAtSpace(henchmanToBePlayed, space)) {
-            rsm.GetActivePlayer().GetDeck().RemoveCardFromHand(henchmanToBePlayed, true);
+            rsm.GetActivePlayer().PlayCardFromHand(henchmanToBePlayed);
             rsm.GetBoard().PutHenchmanAtSpace(henchmanToBePlayed, space);
         }
         rsm.ChangeState<MainPhaseState>();

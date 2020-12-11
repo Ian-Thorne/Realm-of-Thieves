@@ -99,6 +99,19 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+    public bool CanPlayCardFromHand(Card card) {
+        //the card must be controlled by this PlayerManagerand cost less than its available mana
+        bool controlledByMe = (card.GetController() == this);
+        bool castable = mana.CanPayCost(card.GetCost());
+        return controlledByMe && castable;
+    }
+
+    public void PlayCardFromHand(Card card) {
+        Debug.Assert(CanPlayCardFromHand(card));
+        deck.RemoveCardFromHand(card, true);
+        mana.PayCost(card.GetCost());
+    }
+
     //-----------------------------
     // healing and damaging methods
     //-----------------------------
