@@ -143,6 +143,30 @@ public abstract class Card : MonoBehaviour {
         //ask PlayerManager's DeckManager
     }
 
+    public void GivePermanentManaToController(uint mana) {
+        //
+    }
+
+    public void GivePermanentManaToOpponent(uint mana) {
+        //
+    }
+
+    public void GiveUsablePermanentManaToController(uint mana) {
+        //
+    }
+
+    public void GiveUsablePermanentManaToOpponent(uint mana) {
+        //
+    }
+
+    public void GiveTemporaryManaToController(uint mana) {
+        //
+    }
+
+    public void GiveTemporaryManaToOpponent(uint mana) {
+        //
+    }
+
     //-----------------
     // accessor methods
     //-----------------
