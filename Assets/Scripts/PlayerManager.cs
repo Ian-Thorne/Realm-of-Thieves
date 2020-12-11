@@ -29,6 +29,8 @@ public class PlayerManager : MonoBehaviour {
     private PlayerManager opponent;
     [SerializeField]
     private DeckManager deck;
+    [SerializeField]
+    private ManaManager mana;
 
     private uint currentHealth;
     private List<uint> prizeCardThresholds;
@@ -64,6 +66,10 @@ public class PlayerManager : MonoBehaviour {
     public void HandleBeginningOfTurn() {
         ToggleActiveIndicator();
         deck.ToggleHandVisibility();
+
+        //increment max mana by one
+        mana.HandleBeginningOfTurn();
+
         //draw a card for the turn
         deck.DrawCards(1);
     }
@@ -71,6 +77,7 @@ public class PlayerManager : MonoBehaviour {
     public void HandleEndOfTurn() {
         //clean up any cards that have been "destroyed"
         deck.CleanUpDestroyedCards();
+
         deck.ToggleHandVisibility();
         ToggleActiveIndicator();
     }

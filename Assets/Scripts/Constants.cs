@@ -24,4 +24,11 @@ public static class Constants {
     public const string HandObjectName = "Hand";
     public const string PrizeCardsObjectName = "Prize Cards";
     public const string PrizeCardIndicatorName = "Number";
+
+    //------------------------------
+    // ManaManager-related constants
+    //------------------------------
+
+    public const string MaxManaIndicatorName = "Max Mana";
+    public const string TempManaIndicatorName = "Temp Mana";
 }

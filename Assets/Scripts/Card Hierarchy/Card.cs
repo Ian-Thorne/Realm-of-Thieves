@@ -25,9 +25,10 @@ public abstract class Card : MonoBehaviour {
     // member variables
     //-----------------
 
-    //something to measure cost
     [SerializeField]
     private string cardName;
+    [SerializeField]
+    private uint cost;
     [SerializeField]
     private bool isMasterPlan;
     [SerializeField]
@@ -148,6 +149,10 @@ public abstract class Card : MonoBehaviour {
 
     public string GetName() {
         return cardName;
+    }
+
+    public uint GetCost() {
+        return cost;
     }
 
     public bool IsCardMasterPlan() {
