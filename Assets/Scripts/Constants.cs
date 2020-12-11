@@ -20,6 +20,7 @@ public static class Constants {
     public const uint StartingHandSize = 3;
     public const uint NumPrizeCards = 3;
     public const string DeckObjectName = "Deck";
+    public const string DeckCountIndicatorName = "Number";
     public const string HandObjectName = "Hand";
     public const string PrizeCardsObjectName = "Prize Cards";
     public const string PrizeCardIndicatorName = "Number";

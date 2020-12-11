@@ -26,6 +26,7 @@ public class DeckManager : MonoBehaviour {
     private GameObject visualDeck;
     private GameObject visualHand;
     private GameObject visualPrizeCards;
+    private Text visualDeckText;
     private Text visualPrizeCardText;
 
     //--------------------
@@ -37,6 +38,10 @@ public class DeckManager : MonoBehaviour {
         visualDeck = transform.Find(Constants.DeckObjectName).gameObject;
         if(visualDeck == null) {
             Debug.Log("Didn't find a visualDeck game object for the DeckManager named " + this.name + "...");
+        }
+        visualDeckText = visualDeck.transform.Find(Constants.DeckCountIndicatorName).gameObject.GetComponent<Text>();
+        if(visualDeckText == null) {
+            Debug.Log("Didn't find a visualDeckText game object for the DeckManager named " + this.name + "...");
         }
         visualHand = transform.Find(Constants.HandObjectName).gameObject;
         if(visualHand == null) {
@@ -64,6 +69,7 @@ public class DeckManager : MonoBehaviour {
         if((uint) deck.Count < Constants.MinDeckSize) {
             Debug.Log("The DeckManager named " + this.name + " didn't have at least " + Constants.MinDeckSize + " cards in it...");
         }
+
         ShuffleDeck();
         Debug.Log("Shuffled Deck:");
         foreach(Card card in deck) {
@@ -107,6 +113,7 @@ public class DeckManager : MonoBehaviour {
             Debug.Log("Trying to shuffle a null card into the deck owned by the DeckManager named " + this.name + "...");
         }
         deck.Add(card);
+        visualDeckText.text = deck.Count.ToString();
         ShuffleDeck();
     }
 
@@ -207,6 +214,7 @@ public class DeckManager : MonoBehaviour {
             int lastIndex = deck.Count - 1;
             Card topCard = deck[lastIndex];
             deck.RemoveAt(lastIndex);
+            visualDeckText.text = deck.Count.ToString();
             return topCard;
         } else {
             //if there are no cards left, return null
