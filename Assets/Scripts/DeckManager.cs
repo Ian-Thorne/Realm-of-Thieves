@@ -196,6 +196,22 @@ public class DeckManager : MonoBehaviour {
     // interface-related methods
     //--------------------------
 
+    public void HighlightPlayableCards(ManaManager mana) {
+        foreach(Card card in hand) {
+            if(mana.CanPayCost(card.GetCost())) {
+                card.MarkAsCastable();
+            } else {
+                card.MarkAsUncastable();
+            }
+        }
+    }
+
+    public void UnhighlightPlayableCards() {
+        foreach(Card card in hand) {
+            card.UnMarkCastability();
+        }
+    }
+
     /*
      * This method will call Flip() on all cards in this DeckManager's hand. It's called at
      * the beginning and end of each players' turn to make sure their hand is only visible

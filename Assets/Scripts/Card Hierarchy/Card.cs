@@ -143,6 +143,43 @@ public abstract class Card : MonoBehaviour {
         //ask PlayerManager's DeckManager
     }
 
+    //--------------------------
+    // interface-related methods
+    //--------------------------
+
+    public void MarkAsCastable() {
+        if(playState == PlayStateEnum.HAND) {
+            Image background = this.gameObject.GetComponent<Image>();
+            if(background != null) {
+                background.color = new Color(0f, 20f/255f, 0f);
+            }
+        } else {
+            Debug.Log("Trying to indicate a card's castability when it's not in hand...");
+        }
+    }
+
+    public void MarkAsUncastable() {
+        if(playState == PlayStateEnum.HAND) {
+            Image background = this.gameObject.GetComponent<Image>();
+            if(background != null) {
+                background.color = new Color(40f/255f, 0f, 0f);
+            }
+        } else {
+            Debug.Log("Trying to indicate a card's castability when it's not in hand...");
+        }
+    }
+
+    public void UnMarkCastability() {
+        if(playState == PlayStateEnum.HAND) {
+            Image background = this.gameObject.GetComponent<Image>();
+            if(background != null) {
+                background.color = new Color(0f, 0f, 0f);
+            }
+        } else {
+            Debug.Log("Trying to indicate a card's castability when it's not in hand...");
+        }
+    }
+
     //-----------------
     // accessor methods
     //-----------------

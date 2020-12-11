@@ -74,11 +74,17 @@ public class PlayerManager : MonoBehaviour {
             //draw a card for the turn
             deck.DrawCards(1);
         }
+
+        //highlight cards for playability
+        deck.HighlightPlayableCards(mana);
     }
 
     public void HandleEndOfTurn() {
         //clean up any cards that have been "destroyed"
         deck.CleanUpDestroyedCards();
+
+        //unhighlight cards for playability
+        deck.UnhighlightPlayableCards();
 
         deck.ToggleHandVisibility();
         ToggleActiveIndicator();
@@ -108,6 +114,7 @@ public class PlayerManager : MonoBehaviour {
 
     public void PlayCardFromHand(Card card) {
         Debug.Assert(CanPlayCardFromHand(card));
+        card.UnMarkCastability();
         deck.RemoveCardFromHand(card, true);
         mana.PayCost(card.GetCost());
     }

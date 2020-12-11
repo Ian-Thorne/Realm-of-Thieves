@@ -640,6 +640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: 
+  cost: 0
   isMasterPlan: 0
   controller: {fileID: 0}
   playState: 0
