@@ -63,15 +63,17 @@ public class PlayerManager : MonoBehaviour {
         activeIndicator.SetActive(false);
     }
 
-    public void HandleBeginningOfTurn() {
+    public void HandleBeginningOfTurn(bool shouldDraw) {
         ToggleActiveIndicator();
         deck.ToggleHandVisibility();
 
         //increment max mana by one
         mana.HandleBeginningOfTurn();
 
-        //draw a card for the turn
-        deck.DrawCards(1);
+        if(shouldDraw) {
+            //draw a card for the turn
+            deck.DrawCards(1);
+        }
     }
 
     public void HandleEndOfTurn() {
@@ -158,7 +160,7 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    public void ToggleActiveIndicator() {
+    private void ToggleActiveIndicator() {
         if(activeIndicator != null) {
             activeIndicator.SetActive(!activeIndicator.activeSelf);
         } else {

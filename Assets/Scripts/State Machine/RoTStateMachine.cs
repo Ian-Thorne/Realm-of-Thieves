@@ -21,25 +21,24 @@ public class RoTStateMachine : StateMachine {
     private PlayerManager activePlayer;
     private Card cardToBePlayed;
     private HenchmanCard attackingHenchman;
+    private bool shouldDrawOnTurnStart;
 
     //--------------------
     // managing game state
     //--------------------
 
-    //FIXME: move some of this logic to a setup state (?)
+    //FIXME: the logic in Start() should probably be moved into its own SetupGameState
     void Start() {
+        board.SetPlayers(player, opponent);
+
         //FIXME: make sure the player's opponent is the opponent and the opponent's is the player
         //FIXME: randomly select the starting player
         activePlayer = player;
 
-        //FIXME: this should be a private method
-        activePlayer.ToggleActiveIndicator();
-        //FIXME: this should be more elegant
-        activePlayer.GetOpponent().GetDeck().ToggleHandVisibility();
+        shouldDrawOnTurnStart = false;
+        activePlayer.HandleBeginningOfTurn(shouldDrawOnTurnStart);
 
         ResetTemporaryVariables();
-
-        board.SetPlayers(player, opponent);
 
         ChangeState<MainPhaseState>();
     }
@@ -79,7 +78,6 @@ public class RoTStateMachine : StateMachine {
     }
 
     public void ToggleActivePlayer() {
-        //FIXME: Remove or change the logic about toggling indicators!
         activePlayer = activePlayer.GetOpponent();
     }
 
@@ -95,6 +93,7 @@ public class RoTStateMachine : StateMachine {
     public void ResetTemporaryVariables() {
         cardToBePlayed = null;
         attackingHenchman = null;
+        shouldDrawOnTurnStart = true;
     }
 
     public void SetCardToBePlayed(Card card) {
@@ -111,5 +110,13 @@ public class RoTStateMachine : StateMachine {
 
     public HenchmanCard GetAttackingHenchman() {
         return attackingHenchman;
+    }
+
+    public void SetShouldDrawOnTurnStart(bool shouldDraw) {
+        shouldDrawOnTurnStart = shouldDraw;
+    }
+
+    public bool GetShouldDrawOnTurnStart() {
+        return shouldDrawOnTurnStart;
     }
 }

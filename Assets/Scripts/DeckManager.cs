@@ -91,6 +91,8 @@ public class DeckManager : MonoBehaviour {
         //draw the player's opening hand
         hand = new List<Card>();
         DrawCards(Constants.StartingHandSize);
+        //then flip the cards face-down, the RoTStateMachine will flip the active player's hand back over
+        ToggleHandVisibility();
 
         //initialize the cardsToDestroy list
         cardsToDestroy = new List<Card>();
