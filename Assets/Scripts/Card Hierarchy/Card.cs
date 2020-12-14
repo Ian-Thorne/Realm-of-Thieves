@@ -95,37 +95,44 @@ public abstract class Card : MonoBehaviour {
     // player-affecting methods
     //-------------------------
 
+    //FIXME: The or for PlayStateEnum.DONE isn't super elegant, because it allows for much more than
+    //       closing act effects. When you refactor the BoardManager to delay destroying henchmen,
+    //       you may be able to let closing act effects trigger after being removed from the board,
+    //       but before changing the playState from PlayStateEnum.BOARD to PlayStateEnum.DONE!
+
     public void DirectHealingToController(int healing) {
-        if(playState == PlayStateEnum.BOARD) {
+        if((playState == PlayStateEnum.BOARD) || (playState == PlayStateEnum.DONE)) {
             controller.ApplyHealing((uint) healing);
         } else {
-            Debug.Log("Card trying to heal controller while not in play...");
+            Debug.Log("Card trying to heal controller while not in play (or during closing act)...");
         }
     }
 
     public void DirectHealingToOpponent(int healing) {
-        if(playState == PlayStateEnum.BOARD) {
+        if((playState == PlayStateEnum.BOARD) || (playState == PlayStateEnum.DONE)) {
             controller.GetOpponent().ApplyHealing((uint) healing);
         } else {
-            Debug.Log("Card trying to heal controller's opponent while not in play...");
+            Debug.Log("Card trying to heal controller's opponent while not in play (or during closing act)...");
         }
     }
 
     public void DirectDamageToController(int damage) {
-        if(playState == PlayStateEnum.BOARD) {
+        if((playState == PlayStateEnum.BOARD) || (playState == PlayStateEnum.DONE)) {
             controller.ApplyDamage((uint) damage);
         } else {
-            Debug.Log("Card trying to damage controller while not in play...");
+            Debug.Log("Card trying to damage controller while not in play (or during closing act)...");
         }
     }
 
     public void DirectDamageToOpponent(int damage) {
-        if(playState == PlayStateEnum.BOARD) {
+        if((playState == PlayStateEnum.BOARD) || (playState == PlayStateEnum.DONE)) {
             controller.GetOpponent().ApplyDamage((uint) damage);
         } else {
-            Debug.Log("Card trying to damage controller's opponent while not in play...");
+            Debug.Log("Card trying to damage controller's opponent while not in play (or during closing act)...");
         }
     }
+
+    //FIXME: All of the methods below need to check that they're in the correct state!
 
     public void DrawCardsForController(int number) {
         controller.GetDeck().DrawCards((uint) number);

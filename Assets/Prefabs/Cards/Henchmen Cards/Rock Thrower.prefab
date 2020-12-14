@@ -587,6 +587,12 @@ MonoBehaviour:
       m_Calls: []
   FlashyEvent:
     m_PersistentCalls:
+      m_Calls: []
+  ClosingActEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AttentionSeekerEvent:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3094538972895442051}
         m_TargetAssemblyTypeName: Card, Assembly-CSharp
@@ -600,12 +606,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  ClosingActEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  AttentionSeekerEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &8973201449269009612
 MonoBehaviour:
   m_ObjectHideFlags: 0
