@@ -265,8 +265,8 @@ public class BoardManager : MonoBehaviour {
             HenchmanCard opponentHenchman = board[opponentSpace];
             if(!playerHenchman.HasActedThisTurn()) {
                 //if the henchman hasn't already acted this turn, the henchmen could fight
-                if((!playerHenchman.IsEllusive() && !opponentHenchman.IsEllusive()) || (playerHenchman.IsEllusive() && opponentHenchman.IsEllusive())) {
-                    //if neither henchman is ellusive or both are, they can fight
+                if(playerHenchman.IsEllusive() || (!playerHenchman.IsEllusive() && !opponentHenchman.IsEllusive())) {
+                    //if the attacking henchman is ellusive or neither henchman is ellusive, they can fight
                     return true;
                 } else {
                     Debug.Log("Henchmen wouldn've been able to fight, except one was ellusive and the other wasn't...");
