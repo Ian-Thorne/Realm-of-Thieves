@@ -308,7 +308,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: Over Achiever
 --- !u!1 &1244118122054694906
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,7 +728,7 @@ MonoBehaviour:
   maxHealth: 5
   ellusive: 0
   eager: 0
-  overAchiever: 0
+  overAchiever: 1
   attackField: {fileID: 6403246935034095584}
   healthField: {fileID: 4722108364745014886}
   schemingMarker: {fileID: 7205553876044629310}

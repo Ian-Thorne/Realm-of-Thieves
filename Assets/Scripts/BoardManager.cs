@@ -294,14 +294,22 @@ public class BoardManager : MonoBehaviour {
     public void HaveHenchmenFight(BoardSpaceEnum playerSpace, BoardSpaceEnum opponentSpace) {
         HenchmanCard playerHenchman = board[playerSpace];
         HenchmanCard opponentHenchman = board[opponentSpace];
+
+        //check if any damage needs to trample over
         int excess = (int) playerHenchman.GetAttack() - opponentHenchman.GetHealth();
-        playerHenchman.ApplyDamage((int) opponentHenchman.GetAttack());
-        opponentHenchman.ApplyDamage((int) playerHenchman.GetAttack());
         if((excess > 0) && playerHenchman.IsOverAchiever()) {
             Debug.Log("ROLLING DAMAGE OVER");
             uint reduction = playerHenchman.GetAttack() - (uint) excess;
             HaveHenchmanAttackTargetPlayer(playerSpace, opponentHenchman.GetController(), damageReduction: reduction);
         }
+
+        //apply damage to the henchmen after applying trample damage to prevent issues arising from the
+        //trampler dying after taking damage from the other henchman, then not being at playerSpace anymore
+        //FIXME: find a more elegant solution, since this could cause some unintuitive interactions with
+        //       triggered effects on the other henchman, since it technically won't "die" until after
+        //       damage has trampled over
+        playerHenchman.ApplyDamage((int) opponentHenchman.GetAttack());
+        opponentHenchman.ApplyDamage((int) playerHenchman.GetAttack());
         playerHenchman.ActionTaken();
     }
 
