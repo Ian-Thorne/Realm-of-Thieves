@@ -128,43 +128,45 @@ public abstract class Card : MonoBehaviour {
     }
 
     public void DrawCardsForController(uint number) {
-        //ask PlayerManager's DeckManager
+        controller.GetDeck().DrawCards(number);
     }
 
     public void DrawCardsForOpponent(uint number) {
-        //ask PlayerManager's DeckManager
+        controller.GetOpponent().GetDeck().DrawCards(number);
     }
 
     public void GivePrizeCardToController() {
-        //ask PlayerManager's DeckManager
+        controller.GetDeck().DrawPrizeCard();
     }
 
     public void GivePrizeCardToOpponent() {
-        //ask PlayerManager's DeckManager
+        controller.GetOpponent().GetDeck().DrawPrizeCard();
     }
 
     public void GivePermanentManaToController(uint mana) {
-        //
+        controller.GetMana().IncreaseMaxManaBy(mana);
     }
 
     public void GivePermanentManaToOpponent(uint mana) {
-        //
+        controller.GetOpponent().GetMana().IncreaseMaxManaBy(mana);
     }
 
     public void GiveUsablePermanentManaToController(uint mana) {
-        //
+        controller.GetMana().IncreaseMaxManaBy(mana);
+        controller.GetMana().IncreaseTempManaBy(mana);
     }
 
     public void GiveUsablePermanentManaToOpponent(uint mana) {
-        //
+        controller.GetOpponent().GetMana().IncreaseMaxManaBy(mana);
+        controller.GetOpponent().GetMana().IncreaseTempManaBy(mana);
     }
 
     public void GiveTemporaryManaToController(uint mana) {
-        //
+        controller.GetMana().IncreaseTempManaBy(mana);
     }
 
     public void GiveTemporaryManaToOpponent(uint mana) {
-        //
+        controller.GetOpponent().GetMana().IncreaseTempManaBy(mana);
     }
 
     //-----------------

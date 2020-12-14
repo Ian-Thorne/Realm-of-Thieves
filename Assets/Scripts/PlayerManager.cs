@@ -198,4 +198,8 @@ public class PlayerManager : MonoBehaviour {
     public DeckManager GetDeck() {
         return deck;
     }
+
+    public ManaManager GetMana() {
+        return mana;
+    }
 }

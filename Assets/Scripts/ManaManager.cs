@@ -51,7 +51,10 @@ public class ManaManager : MonoBehaviour
     }
 
     public void RefreshTempMana() {
-        SetTempMana(maxMana);
+        //don't let refreshing decrease the player's mana by accident
+        if(tempMana < maxMana) {
+            SetTempMana(maxMana);
+        }
     }
 
     public void HandleBeginningOfTurn() {
