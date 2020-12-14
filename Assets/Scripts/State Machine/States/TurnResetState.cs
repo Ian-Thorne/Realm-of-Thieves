@@ -16,9 +16,8 @@ public class TurnResetState : CardGameState {
 
         rsm.ToggleActivePlayer();
 
-        rsm.GetBoard().HandleBeginningOfTurn(rsm.GetActivePlayer());
-        rsm.GetActivePlayer().HandleBeginningOfTurn(rsm.GetShouldDrawOnTurnStart());
-
+        //now that we've toggled the active player, this coroutine will start that player's turn
+        //updating the game state and changing to their MainPhaseState
         StartCoroutine(StartNextTurn());
     }
 
@@ -40,7 +39,12 @@ public class TurnResetState : CardGameState {
      * the Enter() method.
      */
     private IEnumerator StartNextTurn() {
-        yield return null;
+        //add a small delay to give players a chance to swap who's playing without seeing the other's hand
+        yield return new WaitForSeconds(Constants.TurnDelay);
+
+        rsm.GetBoard().HandleBeginningOfTurn(rsm.GetActivePlayer());
+        rsm.GetActivePlayer().HandleBeginningOfTurn(rsm.GetShouldDrawOnTurnStart());
+
         rsm.ChangeState<MainPhaseState>();
     }
 }

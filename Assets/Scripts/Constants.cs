@@ -11,6 +11,7 @@ public static class Constants {
     public const uint FirstHealthThreshold = 5;
     public const uint SecondHealthThreshold = 10;
     public const uint ThirdHealthThreshold = 15;
+    public const float TurnDelay = 2.5f;
 
     //------------------------------
     // DeckManager-related constants
