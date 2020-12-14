@@ -25,6 +25,7 @@ public class DeckManager : MonoBehaviour {
 
     private GameObject visualDeck;
     private GameObject visualHand;
+    private bool handVisible;
     private GameObject visualPrizeCards;
     private Text visualDeckText;
     private Text visualPrizeCardText;
@@ -88,7 +89,8 @@ public class DeckManager : MonoBehaviour {
         }
         visualPrizeCardText.text = prizeCards.Count.ToString();
 
-        //draw the player's opening hand
+        //draw the player's opening hand with handVisible to leave the cards face-up
+        handVisible = true;
         hand = new List<Card>();
         DrawCards(Constants.StartingHandSize);
         //then flip the cards face-down, the RoTStateMachine will flip the active player's hand back over
@@ -205,6 +207,7 @@ public class DeckManager : MonoBehaviour {
      *       likely won't be needed anymore.
      */
     public void ToggleHandVisibility() {
+        handVisible = !handVisible;
         foreach(Card card in hand) {
             card.Flip();
         }
@@ -229,6 +232,9 @@ public class DeckManager : MonoBehaviour {
     }
 
     private void VisuallyPutCardInHand(Card card) {
+        if(!handVisible) {
+            card.Flip();
+        }
         card.transform.SetParent(visualHand.transform);
         card.transform.localRotation = Quaternion.identity;
         card.transform.localScale = new Vector3(1f, 1f, 1f);

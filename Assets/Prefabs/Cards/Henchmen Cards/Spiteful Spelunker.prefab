@@ -154,7 +154,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 5
+  m_Text: X
 --- !u!1 &1077572923889706486
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,7 +233,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Over-Achiever
+  m_Text: 'Vengeance: Draw 2 cards'
 --- !u!1 &1244118122054694906
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,85 +313,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 5
---- !u!1 &1262449527108164457
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4346160392282214461}
-  - component: {fileID: 3972134081754837119}
-  - component: {fileID: 6205769111283067814}
-  m_Layer: 5
-  m_Name: Acted Marker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &4346160392282214461
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262449527108164457}
-  m_LocalRotation: {x: -0, y: -0, z: -0.26594317, w: 0.9639888}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 0.19999999, z: 0.19999999}
-  m_Children: []
-  m_Father: {fileID: 5482086259660553666}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30.846}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 17.5}
-  m_SizeDelta: {x: 300, y: 240}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &3972134081754837119
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262449527108164457}
-  m_CullTransparentMesh: 0
---- !u!114 &6205769111283067814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262449527108164457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 60
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 60
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: I'm done!
 --- !u!1 &1353976977982090749
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +466,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Expert Burglar
+  m_Text: Spiteful Spelunker
 --- !u!1 &5482086259660553667
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +481,7 @@ GameObject:
   - component: {fileID: 3094538972895442051}
   - component: {fileID: 8973201449269009612}
   m_Layer: 5
-  m_Name: Expert Burglar
+  m_Name: Spiteful Spelunker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -583,8 +504,8 @@ RectTransform:
   - {fileID: 2098824783177685212}
   - {fileID: 6110597407390860792}
   - {fileID: 4614601444093857574}
-  - {fileID: 4346160392282214461}
-  - {fileID: 2582792708393481424}
+  - {fileID: 1552634090669443863}
+  - {fileID: 1426612136571163889}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -643,27 +564,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7e62d7cb1c745a3bdb3cd1dbe9b9bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardName: Expert Burglar
+  cardName: Spiteful Spelunker
   cost: 5
   isMasterPlan: 0
   controller: {fileID: 0}
   playState: 0
-  cardBack: {fileID: 6289400353240204876}
-  attack: 5
-  maxHealth: 5
+  cardBack: {fileID: 7445510297027061357}
+  attack: 4
+  maxHealth: 6
   ellusive: 0
   eager: 0
-  overAchiever: 1
+  overAchiever: 0
   attackField: {fileID: 6403246935034095584}
   healthField: {fileID: 4722108364745014886}
   schemingMarker: {fileID: 7205553876044629310}
-  actedMarker: {fileID: 1262449527108164457}
+  actedMarker: {fileID: 9223351955429224096}
   RushEvent:
     m_PersistentCalls:
       m_Calls: []
   VengeanceEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3094538972895442051}
+        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+        m_MethodName: DrawCardsForController
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   FlashyEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -962,8 +895,87 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 5
---- !u!1001 &308849472453926726
+  m_Text: Y
+--- !u!1 &9223351955429224096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1552634090669443863}
+  - component: {fileID: 3499581367330659434}
+  - component: {fileID: 3723099315969516875}
+  m_Layer: 5
+  m_Name: Acted Marker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1552634090669443863
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9223351955429224096}
+  m_LocalRotation: {x: 0, y: 0, z: -0.26594317, w: 0.9639888}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_Children: []
+  m_Father: {fileID: 5482086259660553666}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30.846}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 17.5}
+  m_SizeDelta: {x: 300, y: 240}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3499581367330659434
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9223351955429224096}
+  m_CullTransparentMesh: 0
+--- !u!114 &3723099315969516875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9223351955429224096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 60
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 60
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: I'm done!
+--- !u!1001 &3770344753723883367
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1064,15 +1076,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac31e4a3c95e64c4080dae6574c3b6a0, type: 3}
---- !u!224 &2582792708393481424 stripped
+--- !u!224 &1426612136571163889 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2854909145019968406, guid: ac31e4a3c95e64c4080dae6574c3b6a0, type: 3}
-  m_PrefabInstance: {fileID: 308849472453926726}
+  m_PrefabInstance: {fileID: 3770344753723883367}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6289400353240204876 stripped
+--- !u!114 &7445510297027061357 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5981115351381285130, guid: ac31e4a3c95e64c4080dae6574c3b6a0, type: 3}
-  m_PrefabInstance: {fileID: 308849472453926726}
+  m_PrefabInstance: {fileID: 3770344753723883367}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1

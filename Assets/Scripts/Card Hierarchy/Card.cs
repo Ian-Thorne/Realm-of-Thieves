@@ -95,44 +95,44 @@ public abstract class Card : MonoBehaviour {
     // player-affecting methods
     //-------------------------
 
-    public void DirectHealingToController(uint healing) {
+    public void DirectHealingToController(int healing) {
         if(playState == PlayStateEnum.BOARD) {
-            controller.ApplyHealing(healing);
+            controller.ApplyHealing((uint) healing);
         } else {
             Debug.Log("Card trying to heal controller while not in play...");
         }
     }
 
-    public void DirectHealingToOpponent(uint healing) {
+    public void DirectHealingToOpponent(int healing) {
         if(playState == PlayStateEnum.BOARD) {
-            controller.GetOpponent().ApplyHealing(healing);
+            controller.GetOpponent().ApplyHealing((uint) healing);
         } else {
             Debug.Log("Card trying to heal controller's opponent while not in play...");
         }
     }
 
-    public void DirectDamageToController(uint damage) {
+    public void DirectDamageToController(int damage) {
         if(playState == PlayStateEnum.BOARD) {
-            controller.ApplyDamage(damage);
+            controller.ApplyDamage((uint) damage);
         } else {
             Debug.Log("Card trying to damage controller while not in play...");
         }
     }
 
-    public void DirectDamageToOpponent(uint damage) {
+    public void DirectDamageToOpponent(int damage) {
         if(playState == PlayStateEnum.BOARD) {
-            controller.GetOpponent().ApplyDamage(damage);
+            controller.GetOpponent().ApplyDamage((uint) damage);
         } else {
             Debug.Log("Card trying to damage controller's opponent while not in play...");
         }
     }
 
-    public void DrawCardsForController(uint number) {
-        controller.GetDeck().DrawCards(number);
+    public void DrawCardsForController(int number) {
+        controller.GetDeck().DrawCards((uint) number);
     }
 
-    public void DrawCardsForOpponent(uint number) {
-        controller.GetOpponent().GetDeck().DrawCards(number);
+    public void DrawCardsForOpponent(int number) {
+        controller.GetOpponent().GetDeck().DrawCards((uint) number);
     }
 
     public void GivePrizeCardToController() {
@@ -143,30 +143,30 @@ public abstract class Card : MonoBehaviour {
         controller.GetOpponent().GetDeck().DrawPrizeCard();
     }
 
-    public void GivePermanentManaToController(uint mana) {
-        controller.GetMana().IncreaseMaxManaBy(mana);
+    public void GivePermanentManaToController(int mana) {
+        controller.GetMana().IncreaseMaxManaBy((uint) mana);
     }
 
-    public void GivePermanentManaToOpponent(uint mana) {
-        controller.GetOpponent().GetMana().IncreaseMaxManaBy(mana);
+    public void GivePermanentManaToOpponent(int mana) {
+        controller.GetOpponent().GetMana().IncreaseMaxManaBy((uint) mana);
     }
 
-    public void GiveUsablePermanentManaToController(uint mana) {
-        controller.GetMana().IncreaseMaxManaBy(mana);
-        controller.GetMana().IncreaseTempManaBy(mana);
+    public void GiveUsablePermanentManaToController(int mana) {
+        controller.GetMana().IncreaseMaxManaBy((uint) mana);
+        controller.GetMana().IncreaseTempManaBy((uint) mana);
     }
 
-    public void GiveUsablePermanentManaToOpponent(uint mana) {
-        controller.GetOpponent().GetMana().IncreaseMaxManaBy(mana);
-        controller.GetOpponent().GetMana().IncreaseTempManaBy(mana);
+    public void GiveUsablePermanentManaToOpponent(int mana) {
+        controller.GetOpponent().GetMana().IncreaseMaxManaBy((uint) mana);
+        controller.GetOpponent().GetMana().IncreaseTempManaBy((uint) mana);
     }
 
-    public void GiveTemporaryManaToController(uint mana) {
-        controller.GetMana().IncreaseTempManaBy(mana);
+    public void GiveTemporaryManaToController(int mana) {
+        controller.GetMana().IncreaseTempManaBy((uint) mana);
     }
 
-    public void GiveTemporaryManaToOpponent(uint mana) {
-        controller.GetOpponent().GetMana().IncreaseTempManaBy(mana);
+    public void GiveTemporaryManaToOpponent(int mana) {
+        controller.GetOpponent().GetMana().IncreaseTempManaBy((uint) mana);
     }
 
     //-----------------
